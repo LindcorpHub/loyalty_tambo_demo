@@ -14,7 +14,7 @@
   justify-content: space-between;
   padding: var(--space-2) var(--space-5) 0;
 }
-.b1-head-row .logo { width: 175px; height: auto; }
+.b1-head-row .logo { width: 175px; height: 47px; }
 /* El saludo va 8 px bajo el logo (Figma: el bloque de copia se monta sobre la fila del logo) */
 .b1-head-copy {
   display: flex;
@@ -39,15 +39,21 @@
 .chip.b1-hoy { gap: var(--space-1); }
 /* "Ver mis visitas ›" en blanco (S3, S5 a la derecha; S7 en lugar del chip) */
 .b1-visits {
+  position: relative;
+  top: 1px;
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   font-size: 14px;
   line-height: 20px;
   font-weight: 600;
   color: var(--text-on-brand);
 }
 .b1-visits:active { opacity: 0.7; }
+/* Solo el enlace, sin chip (S7): fila de 24 y cabecera 4 px más baja, como en el Figma */
+.b1-head--link { height: 276px; }
+.b1-head--link .b1-chip-row { height: 24px; padding-top: 0; align-items: flex-start; }
+.b1-head--link .b1-visits { margin-top: 5px; }
 
 .b1-code-wrap {
   position: relative;
@@ -126,7 +132,7 @@
   gap: var(--space-1);
 }
 .b1-unlock-kicker {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 16px;
   font-weight: 600;
   color: var(--text-on-yellow);
@@ -140,6 +146,7 @@
 }
 .b1-unlock-chev {
   position: relative;
+  top: -1px;
   z-index: 1;
   display: inline-flex;
   color: var(--icon-on-yellow-strong);
@@ -164,8 +171,8 @@
 .b1-plus::before { left: 42px; top: 0; width: 36px; height: 120px; }
 .b1-plus::after  { left: 0; top: 42px; width: 120px; height: 36px; }
 
-.b1-sec { padding-top: 28px; }
-.b1-cupones { padding-top: var(--space-3); }
+.b1-sec { padding-top: 29px; }
+.b1-cupones { padding-top: 13px; }
 
 /* ------------------------- B2 · Mi tarjeta (609 / 610) ------------------------- */
 /* Barra: cerrar 44 + segmentado centrado + hueco 44 (Figma 609:3023) */
@@ -575,7 +582,7 @@ a.b2-seg-item:active { background: rgba(255, 255, 255, 0.12); }
 }
 .s5-unlock .b1-unlock-main { top: 0; }
 .s5-unlock .b1-unlock-tile { background: var(--bg-yellow); color: var(--icon-brand); }
-.s5-unlock .b1-unlock-kicker { color: var(--text-on-brand-soft); }
+.s5-unlock .b1-unlock-kicker { font-size: 12px; color: var(--text-on-brand-soft); }
 .s5-unlock .t-m { color: var(--text-on-brand); }
 .s5-unlock .b1-unlock-sub { color: var(--text-on-brand-soft); font-weight: 500; }
 .s5-unlock .b1-unlock-chev { color: var(--icon-on-brand); }
@@ -583,15 +590,17 @@ a.b2-seg-item:active { background: rgba(255, 255, 255, 0.12); }
 /* ------------------------ S6 · Aún sin visitas (Visitas) ------------------------ */
 /* Frame S6 del Figma: "VISITAS", panel amarillo con candado, "Próximo desbloqueo",
    tres pasos, nota al pie, vacío y "Más información" */
+/* overflow: la sombra del panel no pasa al fondo claro (como en el Figma) */
 .s6-head {
-  padding: var(--space-2) var(--space-5) 22px;
+  overflow: hidden;
+  padding: 9px var(--space-5) 20px;
   background: var(--bg-brand);
   color: var(--text-on-brand);
 }
 .s6-panel {
   position: relative;
   overflow: hidden;
-  margin-top: 18px;
+  margin-top: 17px;
   padding: var(--space-5);
   border-radius: var(--radius-xl);
   background: var(--bg-yellow);
@@ -615,14 +624,13 @@ a.b2-seg-item:active { background: rgba(255, 255, 255, 0.12); }
   display: flex;
   align-items: baseline;
   gap: 9px;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 .s6-count .t-display { color: var(--text-brand-on-yellow); }
 .s6-count-label {
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 22px;
   font-weight: 700;
-  letter-spacing: -0.005em;
   color: var(--text-on-yellow-strong);
 }
 .s6-tile { color: var(--icon-yellow); }
@@ -631,8 +639,8 @@ a.b2-seg-item:active { background: rgba(255, 255, 255, 0.12); }
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-3);
-  margin-top: 18px;
-  font-size: 13px;
+  margin-top: 16px;
+  font-size: 12px;
   line-height: 16px;
   font-weight: 600;
   color: var(--text-on-yellow-strong);
@@ -642,7 +650,7 @@ a.b2-seg-item:active { background: rgba(255, 255, 255, 0.12); }
   font-weight: 600;
   color: var(--text-on-yellow-deep);
 }
-.progress.s6-bar { display: block; margin-top: 10px; }
+.progress.s6-bar { display: block; margin-top: 8px; }
 .s6-left {
   margin-top: 8px;
   font-size: 12px;
@@ -695,25 +703,26 @@ a.b2-seg-item:active { background: rgba(255, 255, 255, 0.12); }
   color: var(--text-primary);
 }
 .s6-foot {
-  margin-top: var(--space-2);
+  margin: var(--space-2) 0 1px;
   font-size: 12px;
   line-height: 16px;
   font-weight: 500;
   color: var(--text-tertiary);
 }
 .s6-empty {
-  margin-top: var(--space-3);
+  margin-top: 13px;
   padding: var(--space-5) var(--space-4);
   text-align: center;
 }
 .s6-empty .t-body-s { margin-top: var(--space-1); }
-.s6-list { margin-top: var(--space-3); }
+.s6-list { margin-top: 14px; }
+.s6-list .list-row-title { font-size: 14px; }
 /* Separador desde el texto (no bajo la ficha), como en el Figma */
-.s6-list .list-row + .list-row { position: relative; border-top: 0; }
+.s6-list .list-row + .list-row { position: relative; border-top-color: transparent; }
 .s6-list .list-row + .list-row::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: -1px;
   left: 68px;
   right: 0;
   height: 1px;
@@ -729,14 +738,14 @@ a.b2-seg-item:active { background: rgba(255, 255, 255, 0.12); }
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  padding: 12px var(--space-6) var(--home-h);
+  padding: 12px var(--space-6) calc(var(--home-h) - 1px);
   text-align: center;
 }
 .s7-sheet::before { width: 36px; height: 4px; margin: 0; border-radius: 2px; background: #dccbd6; }
 .hablador.s7-hab { width: auto; height: auto; padding: 6px 20px 7px; }
 .s7-hab .hablador-tag { font-size: 13px; line-height: 16px; }
 .s7-hab .hablador-num { font-size: 28px; line-height: 31px; }
-.s7-title { max-width: 342px; }
+.s7-title { max-width: 342px; margin: 1px 0 -1px; }
 .s7-cta { align-self: stretch; }
 /* Enlace de 22 px con área táctil de 42 px */
-.s7-link { padding: 10px var(--space-2); margin: -10px 0; font-size: 16px; line-height: 22px; }
+.s7-link { padding: 10px var(--space-2); margin: -11px 0 -10px; font-size: 16px; line-height: 22px; }

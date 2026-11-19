@@ -20,13 +20,14 @@
       return '<a class="b1-visits" href="#/r1" data-go="r1">Ver mis visitas' + I("chev_r", 16) + "</a>";
     },
 
-    /* o: { visitas, chip (html|false), link (true = "Ver mis visitas" a la derecha del chip) } */
+    /* o: { visitas, chip (html|false), link (true = "Ver mis visitas" a la derecha del chip),
+           cls (clase extra de la cabecera, p. ej. "b1-head--link" cuando solo va el enlace) } */
     header: function (o) {
       o = o || {};
       var v = o.visitas != null ? o.visitas : D.visitas.acumuladas;
       var chip = o.chip === false ? "" : o.chip || '<span class="chip chip--yellow">¡Sumaste ' + D.visitas.hoy + " visita hoy!</span>";
       return (
-        '<header class="b1-head">' +
+        '<header class="b1-head' + (o.cls ? " " + o.cls : "") + '">' +
         '<div class="b1-head-row">' + ui.logo("negativo", 175) +
         '<a class="avatar" href="#/e1" data-go="e1" aria-label="Mi perfil">' + D.socio.iniciales + "</a></div>" +
         '<div class="b1-head-copy">' +
@@ -483,7 +484,7 @@
   }
 
   function s6Paso(tile, icon, texto) {
-    return '<div class="s6-how-item"><span class="tile ' + tile + ' s6-how-tile">' + I(icon, 24) + "</span><p>" + texto + "</p></div>";
+    return '<div class="s6-how-item"><span class="tile ' + tile + ' s6-how-tile">' + I(icon, 22) + "</span><p>" + texto + "</p></div>";
   }
 
   CT.screen({
@@ -547,7 +548,7 @@
     render: function () {
       var X = CT.inicio, meta = D.visitas.meta;
       return (
-        X.header({ visitas: 0, chip: X.visitsLink() }) + X.barcodeCard(ESTADO_CODIGO) +
+        X.header({ visitas: 0, chip: X.visitsLink(), cls: "b1-head--link" }) + X.barcodeCard(ESTADO_CODIGO) +
         X.unlockCard({ visitas: 0, title: "Te faltan " + meta + " visitas", sub: "0 de " + meta + " visitas" }) +
         X.beneficios(2, ESTADO_LISTA) + '<div style="height:24px"></div>'
       );

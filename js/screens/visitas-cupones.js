@@ -136,9 +136,9 @@
   }
 
   /* Título de página + segmentado de Beneficios (C1, C3, S2) */
-  function headBeneficios(active, count, dispRoute) {
+  function headBeneficios(active, count, dispRoute, title) {
     return (
-      '<h1 class="page-title c1-title">Mis beneficios</h1>' +
+      '<h1 class="page-title c1-title">' + (title || "Mis beneficios") + "</h1>" +
       '<div class="c1-seg">' +
       ui.seg(
         [
@@ -512,19 +512,22 @@
     top: "canvas",
     tab: "beneficios",
     note:
-      "Estado vacío cuando el socio no tiene cupones vigentes: explica qué hacer. " +
-      "Toca <b>Ver mi tarjeta</b> para abrir el código del Club.",
+      "Estado vacío cuando el socio no tiene cupones vigentes (summary.active = 0): explica qué hacer. " +
+      "Toca <b>Ver mi tarjeta</b> para abrir B2.",
     render: function () {
       return (
-        headBeneficios("disp", null, "s2") +
+        // El frame S2 aún dice "Mis cupones"; se usa "Mis beneficios" como C1, C3 y la barra inferior
+        headBeneficios("disp", null, "s2", "Mis beneficios") +
         '<section class="s2-empty">' +
+        // Ilustración del Figma: boleto punteado detrás y boleto amarillo con el ícono de cupón
         '<div class="s2-art" aria-hidden="true">' +
-        '<span class="s2-card s2-card--back"></span>' +
-        '<span class="s2-card s2-card--front">' + I("ticket_pct", 40) + "</span>" +
+        '<svg class="s2-back" width="120" height="100" viewBox="0 0 120 100" focusable="false">' +
+        '<rect x="1" y="1" width="118" height="98" rx="13" fill="#fff9d9" stroke="#e8c800" stroke-width="2" stroke-dasharray="4 2.6"/></svg>' +
+        '<span class="s2-front">' + I("ticket_pct", 44) + "</span>" +
         "</div>" +
-        '<h2 class="t-l s2-title">Aún no tienes cupones disponibles</h2>' +
-        '<p class="t-body-s c-secondary s2-text">Cuando recibas cupones aparecerán aquí. Muestra tu código del Club en todas tus compras para sumar visitas y desbloquear beneficios.</p>' +
-        ui.btn({ text: "Ver mi tarjeta", icon: "scan", go: "b2", cls: "s2-btn" }) +
+        '<h2 class="s2-title">Aún no tienes cupones disponibles</h2>' +
+        '<p class="s2-text">Cuando recibas cupones aparecerán aquí. Muestra tu tarjeta en cada compra para no perderte ninguno.</p>' +
+        ui.btn({ text: "Ver mi tarjeta", icon: "scan", variant: "yellow", go: "b2", cls: "s2-btn" }) +
         "</section>"
       );
     },

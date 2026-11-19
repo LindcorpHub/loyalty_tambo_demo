@@ -4,7 +4,7 @@
    la copia guardada: así la demo abre aunque no haya señal en la tienda.
    Sube VERSION cuando quieras forzar que los celulares limpien la copia vieja.
    ========================================================================== */
-var VERSION = "ct-maqueta-v1";
+var VERSION = "ct-maqueta-v2";
 
 var PRECACHE = [
   "./",
@@ -33,6 +33,13 @@ var PRECACHE = [
   "./assets/img/google.svg",
   "./assets/pwa/icon-192.png",
   "./assets/pwa/icon-512.png",
+  "./assets/img/acceso/bienvenida.png",
+  "./assets/img/cupones/codigo-cupon.svg",
+  "./assets/img/cupones/pilsen.png",
+  "./assets/img/tarjeta/apple-wallet.svg",
+  "./assets/img/tarjeta/google-wallet.svg",
+  "./assets/pwa/apple-touch-icon.png",
+  "./assets/pwa/icon-maskable-512.png",
 ];
 
 self.addEventListener("install", function (event) {

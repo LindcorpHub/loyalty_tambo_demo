@@ -676,42 +676,54 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 48px var(--space-8) 0;
+  padding: 41px var(--space-8) var(--space-6);
 }
-/* Ilustración: dos boletos girados, el de adelante es un hablador */
+/* Ilustración (medida del frame S2): boleto punteado girado -8° detrás y
+   boleto amarillo girado 5° delante, con sombra morada */
 .s2-art {
   position: relative;
+  flex: none;
   width: 200px;
-  height: 140px;
+  height: 150px;
 }
-.s2-card {
+.s2-back,
+.s2-front {
   position: absolute;
+  width: 120px;
+  height: 100px;
+  transform: translate(-50%, -50%) rotate(var(--r));
+}
+.s2-back {
+  --r: -8deg;
+  left: 81.5px;
+  top: 77px;
+  overflow: visible;
+}
+.s2-front {
+  --r: 5deg;
+  left: 122px;
+  top: 69px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translate(-50%, -50%) rotate(var(--r));
-}
-.s2-card--back {
-  --r: -8deg;
-  left: 82px;
-  top: 87px;
-  width: 120px;
-  height: 100px;
-  border-radius: var(--radius-card);
-  background: var(--bg-brand-tint);
-}
-.s2-card--front {
-  --r: 12deg;
-  left: 131px;
-  top: 62px;
-  width: 112px;
-  height: 88px;
-  border-radius: var(--radius-lg);
+  border-radius: 14px;
   background: var(--bg-yellow);
-  border-bottom: 3px solid var(--border-focus);
   color: var(--icon-brand);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 12px 20px rgba(94, 0, 66, 0.45);
 }
-.s2-title { margin-top: 22px; }
-.s2-text { margin-top: 10px; }
-.s2-btn { margin-top: 22px; }
+.s2-title {
+  margin-top: 19px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--text-primary);
+}
+.s2-text {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.s2-btn { margin-top: 22px; padding: 0 19px; }
