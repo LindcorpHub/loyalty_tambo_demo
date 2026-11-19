@@ -142,7 +142,7 @@
     wrap.classList.toggle("has-error", !!html);
     box.closest(".check").classList.toggle("is-error", !!html);
     if (html) {
-      wrap.insertAdjacentHTML("beforeend", msg(box.id + "-msg", html, "a2-consent-msg"));
+      box.closest(".check").insertAdjacentHTML("afterend", msg(box.id + "-msg", html, "a2-consent-msg"));
       box.setAttribute("aria-invalid", "true");
       box.setAttribute("aria-describedby", box.id + "-msg");
     } else {
@@ -329,9 +329,10 @@
         id: p + "-terms", checked: o.terms, error: !!o.error,
         html: 'Acepto los <span class="link-inline">Términos y Condiciones</span> y la <span class="link-inline">Política de Privacidad</span> de Tambo.',
       }) +
+      // El error de términos va justo debajo de su casilla (MANDATORY_CONSENT_MISSING)
+      (o.error ? msg(p + "-terms-msg", o.error, "a2-consent-msg") : "") +
       ui.check({ id: p + "-promo", checked: o.promo, html: 'Quiero recibir ofertas y cupones de Tambo.<span class="a2-opt"> (Opcional)</span>' }) +
       "</div>" +
-      (o.error ? msg(p + "-terms-msg", o.error, "a2-consent-msg") : "") +
       "</div>"
     );
   }

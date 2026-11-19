@@ -335,8 +335,7 @@ CT.screen = function (def) {
     var i = flat.indexOf(m);
     var prev = flat[i - 1], next = flat[i + 1];
     notes.innerHTML =
-      '<span class="notes-code">' + m.code + "</span>" +
-      '<p class="notes-group">' + (m.group || "") + "</p>" +
+      '<span class="notes-code">' + m.code + (m.group ? " · " + m.group : "") + "</span>" +
       '<h2 class="notes-title">' + m.title + "</h2>" +
       '<p class="notes-text">' + ((def && def.note) || "Toca el teléfono para navegar como lo haría un socio.") + "</p>" +
       '<div class="notes-nav">' +

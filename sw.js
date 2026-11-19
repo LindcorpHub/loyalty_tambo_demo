@@ -4,7 +4,7 @@
    la copia guardada: así la demo abre aunque no haya señal en la tienda.
    Sube VERSION cuando quieras forzar que los celulares limpien la copia vieja.
    ========================================================================== */
-var VERSION = "ct-maqueta-v2";
+var VERSION = "ct-maqueta-v3";
 
 var PRECACHE = [
   "./",

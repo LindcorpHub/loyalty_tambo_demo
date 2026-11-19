@@ -241,7 +241,7 @@
   color: var(--text-tertiary);
 }
 .a2-consents.has-error .a2-opt { display: block; }
-.a2-consent-msg { padding: 0 8px 0 34px; }
+.a2-consent-msg { padding: 0 8px 0 34px; margin-top: -8px; }
 
 /* Errores (S4): aviso general arriba y mensajes por campo */
 .a2-alert {

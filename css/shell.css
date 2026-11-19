@@ -208,14 +208,6 @@ body {
   color: var(--text-primary);
   text-wrap: balance;
 }
-.notes-group {
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-brand);
-}
 .notes-text {
   font-size: 14px;
   line-height: 21px;
@@ -303,30 +295,32 @@ body {
    Cajón de pantallas (pantallas medianas y celular real)
    -------------------------------------------------------------------------- */
 .drawer-handle {
+  /* Pestaña del cajón: área táctil de 16 px dentro del margen lateral de 20 px,
+     así no tapa tarjetas ni texto de ninguna pantalla */
   display: none;
   position: fixed;
   z-index: 50;
   left: 0;
   top: 50%;
-  width: 22px;
-  height: 64px;
-  margin-top: -32px;
-  border-radius: 0 12px 12px 0;
-  background: var(--bg-inverse);
-  opacity: 0.38;
+  width: 16px;
+  height: 72px;
+  margin-top: -36px;
+  padding: 0;
   align-items: center;
-  justify-content: center;
-  transition: opacity var(--dur-fast) var(--ease-out), width var(--dur-fast) var(--ease-out);
+  justify-content: flex-start;
+  background: transparent;
 }
 .drawer-handle::before {
   content: "";
-  width: 3px;
-  height: 24px;
-  border-radius: 2px;
-  background: var(--bg-yellow);
+  width: 5px;
+  height: 44px;
+  border-radius: 0 4px 4px 0;
+  background: var(--bg-inverse);
+  opacity: 0.32;
+  transition: opacity var(--dur-fast) var(--ease-out), width var(--dur-fast) var(--ease-out);
 }
-.drawer-handle:hover,
-.drawer-handle:focus-visible { opacity: 0.9; width: 26px; }
+.drawer-handle:hover::before,
+.drawer-handle:focus-visible::before { opacity: 0.7; width: 7px; }
 
 .drawer-scrim {
   position: fixed;
@@ -394,7 +388,8 @@ html.is-native .device {
 html.is-native .device::before { display: none; }
 html.is-native .app { border-radius: 0; }
 html.is-native {
-  --status-h: env(safe-area-inset-top, 0px);
+  /* Aire mínimo arriba cuando el navegador no reporta zona segura */
+  --status-h: max(env(safe-area-inset-top, 0px), 10px);
   --home-h: env(safe-area-inset-bottom, 0px);
 }
 html.is-native .statusbar { height: var(--status-h); padding: 0; }
