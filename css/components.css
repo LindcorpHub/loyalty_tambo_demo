@@ -461,7 +461,7 @@ a.cupon:focus-visible { outline-offset: 3px; }
 
 .cupon-shape {
   --cut-x: 88px;   /* costura entre talón y cuerpo */
-  --cut-r: 9px;    /* radio de las muescas */
+  --cut-r: 5px;    /* radio de las muescas: discretas, solo marcan el corte */
   position: relative;
   display: flex;
   align-items: stretch;
