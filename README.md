@@ -36,6 +36,17 @@ Cada pantalla tiene su propio enlace (por ejemplo `.../#/b1` para el Inicio o `.
 
 > Si el repositorio es privado, GitHub Pages requiere un plan que lo permita. Para compartir con usuarios externos, usa un repositorio público.
 
+## Instalarla como app en el celular (PWA)
+
+La maqueta es una PWA: se instala desde el navegador, abre a pantalla completa con el ícono de Tambo y funciona sin internet después de la primera visita.
+
+- **iPhone (Safari):** abre el enlace de GitHub Pages, toca **Compartir** y luego **Agregar a inicio**.
+- **Android (Chrome):** abre el enlace y toca **Instalar app** en el aviso, o en el menú ⋮ elige **Instalar app** / **Agregar a la pantalla principal**.
+
+Antes de una demo sin señal, ábrela una vez con internet y recorre las pantallas para que queden guardadas. Para saltar entre pantallas dentro de la app, toca la pestaña del borde izquierdo.
+
+> La instalación solo funciona desde el enlace publicado (https) o desde `http://localhost`. Abriendo `index.html` con doble clic la maqueta se ve, pero no se puede instalar.
+
 ## Estructura
 
 ```

@@ -8,9 +8,19 @@
 (function () {
   var ui = CT.ui, I = ui.I, D = CT.data;
 
-  /* Piezas del Inicio reutilizables por los estados S1, S3, S5, S6, S7 */
+  /* Piezas del Inicio reutilizables por los estados S1, S3, S5, S6, S7 (y A5) */
   CT.inicio = {
-    /* o: { visitas, chip (html|false) } */
+    /* Chip "+1 hoy" de los frames de estado (S3, S5) */
+    hoyChip: function () {
+      return '<span class="chip chip--yellow b1-hoy">' + I("plus", 14) + "+" + D.visitas.hoy + " hoy</span>";
+    },
+
+    /* Enlace "Ver mis visitas ›" en blanco sobre morado (S3 y S5 a la derecha; S7 en lugar del chip) */
+    visitsLink: function () {
+      return '<a class="b1-visits" href="#/r1" data-go="r1">Ver mis visitas' + I("chev_r", 16) + "</a>";
+    },
+
+    /* o: { visitas, chip (html|false), link (true = "Ver mis visitas" a la derecha del chip) } */
     header: function (o) {
       o = o || {};
       var v = o.visitas != null ? o.visitas : D.visitas.acumuladas;
@@ -22,20 +32,22 @@
         '<div class="b1-head-copy">' +
         '<p class="t-m">Hola, ' + D.socio.nombre + "</p>" +
         '<p class="b1-count"><span class="t-display num">' + v + '</span><span class="t-m">visitas acumuladas</span></p>' +
-        '<div class="b1-chip-row">' + chip + "</div>" +
+        '<div class="b1-chip-row">' + chip + (o.link ? CT.inicio.visitsLink() : "") + "</div>" +
         "</div></header>"
       );
     },
 
-    barcodeCard: function () {
+    /* o: { label, note } · por defecto los textos de B1 */
+    barcodeCard: function (o) {
+      o = o || {};
       return (
         '<div class="b1-code-wrap px">' +
         '<div class="b1-code">' +
-        '<div class="b1-code-top"><span class="t-label-s c-brand">Código Club Tambero</span>' +
+        '<div class="b1-code-top"><span class="t-label-s c-brand">' + (o.label || "Código Club Tambero") + "</span>" +
         '<a class="b1-expand" href="#/b2" data-go="b2">' + I("maximize", 16) + "<span>Ampliar</span></a></div>" +
         '<a class="b1-code-bars" href="#/b2" data-go="b2" aria-label="Ampliar código">' + ui.barcode(300, 60) + "</a>" +
         '<p class="b1-code-num num">' + D.tarjeta.numero + "</p>" +
-        '<p class="b1-code-note">¡Muéstralo en todas tus compras para sumar visitas y desbloquear beneficios!</p>' +
+        '<p class="b1-code-note">' + (o.note || "¡Muéstralo en todas tus compras para sumar visitas y desbloquear beneficios!") + "</p>" +
         "</div></div>"
       );
     },
@@ -63,11 +75,13 @@
       );
     },
 
-    beneficios: function (n) {
+    /* o: { title } · "Tus beneficios" (B1) o "Tus cupones" (frames de estado) */
+    beneficios: function (n, o) {
+      o = o || {};
       var list = D.cupones.slice(0, n || 2);
       return (
         '<div class="sec-head px b1-sec">' +
-        '<h2 class="sec-title">Tus beneficios <span class="count">' + D.cupones.length + "</span></h2>" +
+        '<h2 class="sec-title">' + (o.title || "Tus beneficios") + ' <span class="count">' + D.cupones.length + "</span></h2>" +
         '<a class="link" href="#/c1" data-go="c1" data-nav="fade">Ver todos</a></div>' +
         '<div class="px stack gap-3 b1-cupones">' +
         list.map(function (c) { return ui.cupon(c, { go: "c2/" + c.id }); }).join("") +
@@ -385,25 +399,29 @@
     render: s1,
   });
 
+  /* Textos de la tarjeta y de la lista en los frames de estado (S3, S5, S7) */
+  var ESTADO_CODIGO = { label: "Club Tambero", note: "Muéstrala al pagar para sumar visitas y usar tus cupones" };
+  var ESTADO_LISTA = { title: "Tus cupones" };
+
   /* ------------------------------ S3 · Sin conexión ------------------------------ */
   CT.screen({
     id: "s3",
     top: "brand",
     tab: "inicio",
     note:
-      "Degradación por sección: el Inicio sigue con los datos guardados y solo la sección que falló muestra el aviso. " +
-      "Toca <b>Reintentar</b>: repite solo esa llamada.",
+      "Degradación por sección: si <b>raffles</b> responde 5xx o tarda más de 3 s, solo la tarjeta del desbloqueo muestra el aviso y el resto del Inicio sigue funcionando. " +
+      "<b>Reintentar</b> repite solo esa llamada; las visitas siguen sumando.",
     render: function () {
       var X = CT.inicio;
       return (
-        X.header() + X.barcodeCard() +
+        X.header({ chip: X.hoyChip(), link: true }) + X.barcodeCard(ESTADO_CODIGO) +
         '<div class="px s3-off-wrap"><div class="card s3-off" role="status">' +
         '<span class="tile tile--muted s3-off-tile">' + I("wifi_off", 20) + "</span>" +
         '<p class="t-m c-primary s3-off-title">Sin conexión</p>' +
         '<p class="t-body-s c-secondary s3-off-text">Mostramos tus datos guardados. Tu tarjeta funciona igual en caja.</p>' +
         ui.btn({ text: "Reintentar", variant: "secondary", size: "s", cls: "s3-retry", iconHtml: I("refresh", 16), attrs: { id: "s3-retry" } }) +
         "</div></div>" +
-        X.beneficios(2) + '<div style="height:24px"></div>'
+        X.beneficios(2, ESTADO_LISTA) + '<div style="height:24px"></div>'
       );
     },
     mount: function (root) {
@@ -433,12 +451,12 @@
     top: "brand",
     tab: "inicio",
     note:
-      "Sin notificaciones en V0: el socio se entera de la sorpresa al entrar. La tarjeta del desbloqueo cambia a magenta; " +
-      "tócala para abrir <b>R3 · Sorpresa desbloqueada</b> (se muestra una sola vez).",
+      "Sin notificaciones push en V0: el socio se entera de la sorpresa al entrar a la web y la tarjeta del desbloqueo cambia a magenta. " +
+      "Tócala para abrir <b>R3 · Sorpresa desbloqueada</b>; se muestra una sola vez (marca local de visto).",
     render: function () {
       var X = CT.inicio, meta = D.visitas.meta;
       return (
-        X.header({ visitas: meta }) + X.barcodeCard() +
+        X.header({ visitas: meta, chip: X.hoyChip(), link: true }) + X.barcodeCard(ESTADO_CODIGO) +
         X.unlockCard({
           cls: "s5-unlock",
           icon: "gift",
@@ -449,7 +467,7 @@
           bar: false,
           go: "r3",
         }) +
-        X.beneficios(2) + '<div style="height:24px"></div>'
+        X.beneficios(2, ESTADO_LISTA) + '<div style="height:24px"></div>'
       );
     },
   });
@@ -457,11 +475,15 @@
   /* ---------------------- S6 · Aún sin visitas (pantalla Visitas) ---------------------- */
   function s6Fila(titulo, toast) {
     return (
-      '<button type="button" class="list-row" data-toast="' + toast + '" data-toast-icon="info">' +
+      '<button type="button" class="list-row" data-toast="' + toast + '" data-toast-icon="file">' +
       '<span class="tile s6-row-tile">' + I("file", 20) + "</span>" +
       '<span class="list-row-main"><span class="list-row-title">' + titulo + "</span></span>" +
       I("chev_r", 20) + "</button>"
     );
+  }
+
+  function s6Paso(tile, icon, texto) {
+    return '<div class="s6-how-item"><span class="tile ' + tile + ' s6-how-tile">' + I(icon, 24) + "</span><p>" + texto + "</p></div>";
   }
 
   CT.screen({
@@ -469,47 +491,45 @@
     top: "brand",
     tab: "visitas",
     note:
-      "Socio nuevo o sin compras que sumen: 0 visitas, barra vacía y, en lugar de la lista, una invitación a usar la tarjeta. " +
-      "Afiliarse no da visitas.",
+      "Primera vez en Visitas o socio sin compras que sumen: 0 visitas, barra vacía y, en lugar de la lista, una invitación a usar la tarjeta. " +
+      "Es el estado de todo socio nuevo, porque afiliarse no da visitas.",
     render: function () {
       var meta = D.visitas.meta;
       return (
         '<header class="s6-head">' +
-        '<h1 class="page-title on-brand">Mis visitas</h1>' +
+        '<h1 class="page-title on-brand">Visitas</h1>' +
         '<div class="s6-panel">' +
+        '<span class="s6-plus" aria-hidden="true"></span>' +
         '<div class="s6-panel-row">' +
         '<div class="s6-panel-copy">' +
-        '<p class="s6-kicker">¡Tu premio te espera!</p>' +
-        '<p class="s6-count"><span class="t-display num">0</span><span class="t-m">visitas acumuladas</span></p>' +
+        '<p class="s6-kicker">Tus visitas acumuladas</p>' +
+        '<p class="s6-count"><span class="t-display num">0</span><span class="s6-count-label">visitas</span></p>' +
         "</div>" +
-        '<span class="tile tile--brand tile--lg s6-tile">' + I("gift", 24) + "</span>" +
+        '<span class="tile tile--brand tile--lg s6-tile">' + I("lock", 24) + "</span>" +
         "</div>" +
-        '<div class="s6-progress">' +
-        '<p class="s6-of num">0 de ' + meta + "</p>" +
-        '<span class="progress" role="progressbar" aria-label="Avance al próximo desbloqueo" aria-valuemin="0" aria-valuemax="' + meta + '" aria-valuenow="0" style="--p:0%"><span></span></span>' +
-        '<p class="s6-left">Te faltan ' + meta + " visitas para conseguir tu premio</p>" +
-        "</div>" +
-        '<span class="s6-plus" aria-hidden="true"></span>' +
+        '<p class="s6-next"><span>Próximo desbloqueo</span><span class="s6-of num">0 de ' + meta + "</span></p>" +
+        '<span class="progress s6-bar" role="progressbar" aria-label="Avance al próximo desbloqueo" aria-valuemin="0" aria-valuemax="' + meta + '" aria-valuenow="0" style="--p:0%"><span></span></span>' +
+        '<p class="s6-left">Te faltan ' + meta + " visitas para descubrir qué es.</p>" +
         "</div></header>" +
 
         '<div class="px s6-sec"><h2 class="sec-title">Cómo sumar más</h2></div>' +
         '<div class="px"><div class="card s6-how">' +
-        '<div class="s6-how-item"><span class="tile tile--brand s6-how-tile">' + I("scan", 22) + "</span>" +
-        "<p>Muestra tu código del Club o DNI al comprar</p></div>" +
-        '<div class="s6-how-item"><span class="tile tile--yellow s6-how-tile">' + I("cart", 22) + "</span>" +
-        "<p>Cada compra de S/10 o más suma 1 visita</p></div>" +
+        s6Paso("tile--brand", "scan", "Muestra tu tarjeta") +
+        s6Paso("tile--yellow", "cart", "Compra más de S/ 10") +
+        s6Paso("s6-how-tile--tint", "plus", "Revisa tus visitas") +
         "</div></div>" +
+        '<p class="px s6-foot">Solo cuentan las visitas con compras de más de S/&nbsp;10.</p>' +
 
         '<div class="px s6-sec"><h2 class="sec-title">Tus últimas visitas</h2></div>' +
         '<div class="px"><div class="card s6-empty">' +
         '<p class="t-m c-primary">Aún no tienes visitas</p>' +
-        '<p class="t-body-s c-secondary">Muestra tu tarjeta al pagar para sumar tus primeras visitas.</p>' +
+        '<p class="t-body-s c-secondary">Muestra tu tarjeta en compras de más de S/&nbsp;10 para sumar tus primeras visitas.</p>' +
         "</div></div>" +
 
         '<div class="px s6-sec"><h2 class="sec-title">Más información</h2></div>' +
         '<div class="px"><div class="list s6-list">' +
-        s6Fila("Cómo funcionan las visitas", "Abre la explicación de las visitas (demo)") +
-        s6Fila("Términos y condiciones", "Abre los términos y condiciones (demo)") +
+        s6Fila("Cómo funcionan las visitas", "Se abre la explicación de cómo funcionan las visitas") +
+        s6Fila("Términos y condiciones", "Se abren los términos y condiciones del Club Tambero") +
         "</div></div>" +
         '<div style="height:24px"></div>'
       );
@@ -522,14 +542,14 @@
     top: "brand",
     tab: "inicio",
     note:
-      "Las visitas son por periodo: al cerrar uno, el contador y la barra vuelven a 0 y esta hoja lo explica una sola vez, sin fechas. " +
+      "Las visitas son por periodo: al cerrar uno, el contador y la barra vuelven a 0 y esta hoja lo explica una sola vez, sin fechas (si el socio tenía 0 visitas, no se muestra). " +
       "Toca <b>Entendido</b> para ver el Inicio del nuevo periodo.",
     render: function () {
       var X = CT.inicio, meta = D.visitas.meta;
       return (
-        X.header({ visitas: 0, chip: false }) + X.barcodeCard() +
+        X.header({ visitas: 0, chip: X.visitsLink() }) + X.barcodeCard(ESTADO_CODIGO) +
         X.unlockCard({ visitas: 0, title: "Te faltan " + meta + " visitas", sub: "0 de " + meta + " visitas" }) +
-        X.beneficios(2) + '<div style="height:24px"></div>'
+        X.beneficios(2, ESTADO_LISTA) + '<div style="height:24px"></div>'
       );
     },
     overlay: function () {
@@ -539,8 +559,8 @@
         '<section class="sheet s7-sheet" role="dialog" aria-modal="true" aria-labelledby="s7-title">' +
         ui.hablador({ tag: "Tus", num: antes, pie: "Visitas" }, null, "s7-hab") +
         '<h2 class="page-title s7-title" id="s7-title">¡Empieza un nuevo periodo!</h2>' +
-        '<p class="t-body c-secondary">Tus ' + antes + " visitas del periodo anterior ya se contaron. Desde hoy tu contador vuelve a 0.</p>" +
-        '<p class="t-note c-tertiary">Cuando desbloquees una sorpresa, te avisamos aquí mismo.</p>' +
+        '<p class="t-body c-secondary s7-text">Tus ' + antes + " visitas del periodo anterior ya se contaron. Desde hoy tu contador vuelve a 0: sigue usando tu tarjeta, se vienen más sorpresas.</p>" +
+        '<p class="t-note c-tertiary s7-note">Cuando desbloquees una sorpresa, te avisamos aquí mismo.</p>' +
         '<button type="button" class="btn btn--primary btn--block s7-cta" data-close-layer>Entendido</button>' +
         '<a class="link s7-link" href="#/r1" data-go="r1">¿Cómo funcionan las visitas?</a>' +
         "</section></div>"

@@ -121,7 +121,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--bg-brand);
+  background: var(--bg-inverse);
   color: var(--text-on-brand);
   font-size: 12px;
   line-height: 1;
@@ -529,13 +529,29 @@
   color: var(--icon-brand);
   overflow: hidden;
 }
+/* Foto real (recorte 1x del Figma, sin el hablador ni su sombra) */
+.c2-photo {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: var(--bg-muted);
+}
 .c2-hab {
   position: relative;
   z-index: 1;
   display: flex;
   margin: -52px 0 0 36px;
 }
-.c2-info { padding: var(--space-4) var(--space-5) 0; }
+/* Hablador L del Figma C2: rótulos de 11 px, sombra morada que cae sobre la foto */
+.c2-hab .hablador--l {
+  gap: 2px;
+  box-shadow: 0 11px 20px rgba(94, 0, 66, 0.55);
+}
+.c2-hab .hablador-tag { font-size: 11px; line-height: 13px; }
+.c2-hab .hablador-num { line-height: 40px; }
+/* Los chips tapan la sombra del hablador (en el Figma la sombra queda debajo) */
+.c2-info { position: relative; z-index: 2; padding: var(--space-4) var(--space-5) 0; }
 .c2-chips {
   display: flex;
   flex-wrap: wrap;
@@ -543,9 +559,9 @@
 }
 .c2-title {
   margin-top: var(--space-2);
-  font-size: 22px;
+  font-size: 20px;
   line-height: 26px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.005em;
   color: var(--text-primary);
 }
@@ -554,6 +570,8 @@
 .c2-how-wrap { padding: var(--space-5) var(--space-5) 0; }
 .c2-how {
   padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--bg-canvas);
   container-type: inline-size;
 }
 .c2-how-head {
@@ -569,17 +587,16 @@
 .c2-steps {
   gap: 10px;
   margin-top: 14px;
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
-.c2-steps li { gap: 10px; }
+.c2-steps li { gap: 11px; }
 /* A 390 px cada paso cabe en una línea, como en el Figma (puede rozar el padding) */
 @container (min-width: 310px) {
   .c2-steps li > span:last-child { white-space: nowrap; }
 }
 .c2-code {
   margin-top: 14px;
-  padding: 15px 11px 11px;
-  border: 1px solid var(--border-barcode);
+  padding: 16px 12px 12px;
   border-radius: var(--radius-md);
   background: var(--bg-barcode);
   text-align: center;
@@ -594,25 +611,31 @@
   margin-top: 10px;
   font-size: 14px;
   line-height: 20px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 600;
   color: var(--text-on-barcode);
-  font-variant-numeric: tabular-nums;
 }
 
 .c2-cond { padding: var(--space-6) var(--space-5) calc(var(--space-6) + var(--home-h)); }
+.c2-cond-list { margin-top: var(--space-2); }
 .c2-cond-list li {
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
-  padding: var(--space-2) 0;
+  padding: var(--space-2) 12px var(--space-2) 0;
   font-size: 14px;
   line-height: 20px;
   font-weight: 500;
   color: var(--text-secondary);
 }
 .c2-cond-list .ico { color: var(--icon-secondary); }
-.c2-vig { margin-top: var(--space-4); }
+.c2-vig {
+  margin-top: 4px;
+  padding-left: 13px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
 
 /* ------------------------ C3 · Usados y vencidos ------------------------ */
 .c3-list {

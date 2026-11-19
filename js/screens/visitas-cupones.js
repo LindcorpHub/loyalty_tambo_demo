@@ -49,12 +49,12 @@
     },
   ];
 
-  // C2: condiciones del Figma (Sixpack Pilsen) y detalle de cada cupón
+  // C2: condiciones del Figma (Sixpack Pilsen), con su ícono, y detalle de cada cupón
   var COND = {
-    tiendas: "Válido en todas las tiendas Tambo del Perú.",
-    uso: "Válido para un solo uso. Máximo 2 cupones por día por cliente.",
-    promo: "No acumulable con otras promociones del mismo producto.",
-    alcohol: "Solo para mayores de 18 años. Tomar bebidas alcohólicas en exceso es dañino.",
+    tiendas: { icon: "store", text: "Válido en todas las tiendas Tambo del Perú." },
+    uso: { icon: "ticket", text: "Válido para un solo uso. Máximo 2 cupones por día por cliente" },
+    promo: { icon: "info", text: "No acumulable con otras promociones del mismo producto." },
+    alcohol: { icon: "alert", text: "Solo para mayores de 18 años. Tomar bebidas alcohólicas en exceso es dañino." },
   };
   var DETALLE = {
     pilsen: {
@@ -64,6 +64,8 @@
       vigencia: "Vigencia: del 1 al 20 de octubre de 2026.",
       condiciones: [COND.tiendas, COND.uso, COND.promo, COND.alcohol],
       icono: "cart",
+      // imageUrl del API de cupones: recorte 1x de la foto del frame C2 del Figma
+      foto: "assets/img/cupones/pilsen.png",
     },
     snacks: {
       tituloLargo: "20% de descuento en Snacks Lay's y Pringles",
@@ -420,45 +422,48 @@
 
   CT.screen({
     id: "c2",
-    top: "canvas",
+    top: "surface",
+    bg: "var(--bg-surface)",
     note:
-      "Detalle del cupón con su código arriba del pliegue: en caja primero se escanea la tarjeta del Club y luego este código. " +
-      "Toca la flecha para volver.",
+      "Detalle del cupón con el código arriba del pliegue: es lo que el cajero escanea, después de la tarjeta del Club. " +
+      "La foto y el hablador son imágenes del API de cupones. Toca la flecha para volver.",
     render: function (ctx) {
       var c = CT.cupon(ctx.params && ctx.params[0]);
       var conds = (c.condiciones || []).map(function (t) {
-        return "<li>" + I("check_circle", 20) + "<span>" + t + "</span></li>";
+        return "<li>" + I(t.icon, 20) + "<span>" + t.text + "</span></li>";
       }).join("");
+      // Foto del cupón (imageUrl): la de Pilsen es el recorte del Figma; el resto, marcador con ícono
+      var media = c.foto
+        ? '<img class="c2-media c2-photo" src="' + c.foto + '" width="350" height="180" alt="Foto de ' + esc(c.titulo) + '">'
+        : '<div class="c2-media" role="img" aria-label="Foto de ' + esc(c.titulo) + '">' + I(c.icono || "ticket_pct", 56) + "</div>";
       return (
-        ui.appbar({ title: "Detalle del cupón" }) +
-        // Foto del cupón (imageUrl del API de cupones): marcador hasta tener la foto del Figma
-        '<div class="c2-media-wrap"><div class="c2-media" role="img" aria-label="Foto de ' + esc(c.titulo) + '">' +
-        I(c.icono || "ticket_pct", 56) + "</div></div>" +
+        ui.appbar({ title: "Detalle del cupón", cls: "vc-bar" }) +
+        '<div class="c2-media-wrap">' + media + "</div>" +
         '<div class="c2-hab">' + ui.hablador(c.hablador, "l") + "</div>" +
 
         '<section class="c2-info">' +
-        '<div class="c2-chips"><span class="chip chip--success">' + I("check_circle", 14) + "Listo para usar</span>" + venceChip(c) + "</div>" +
+        '<div class="c2-chips"><span class="chip chip--success">' + I("check", 14) + "Listo para usar</span>" + venceChip(c) + "</div>" +
         '<h1 class="c2-title">' + esc(c.tituloLargo || c.titulo) + "</h1>" +
         '<p class="t-body-s c-secondary c2-desc">' + esc(c.detalle || c.desc) + "</p>" +
         "</section>" +
 
-        '<div class="c2-how-wrap"><section class="card c2-how" aria-labelledby="c2-how-t">' +
-        '<div class="c2-how-head"><span class="tile c2-how-tile">' + I("store", 18) + "</span>" +
+        '<div class="c2-how-wrap"><section class="c2-how" aria-labelledby="c2-how-t">' +
+        '<div class="c2-how-head"><span class="tile tile--brand c2-how-tile">' + I("scan", 18) + "</span>" +
         '<h2 class="t-m" id="c2-how-t">¿Cómo canjear tu cupón?</h2></div>' +
         steps("vc-steps c2-steps", [
           "Muestra tu código del Club Tambero en caja.",
           "Luego muestra este código antes de pagar.",
         ]) +
         '<div class="c2-code">' +
-        '<img class="c2-barcode" src="assets/img/barcode.svg" width="294" height="80" alt="Código de barras del cupón ' + c.codigo + '">' +
+        '<img class="c2-barcode" src="assets/img/cupones/codigo-cupon.svg" width="294" height="80" alt="Código de barras del cupón ' + c.codigo + '">' +
         '<p class="c2-code-num">' + c.codigo + "</p>" +
         "</div>" +
         "</section></div>" +
 
         '<section class="c2-cond">' +
-        '<h2 class="t-l">Condiciones</h2>' +
+        '<h2 class="t-l c2-cond-title">Condiciones</h2>' +
         '<ul class="c2-cond-list">' + conds + "</ul>" +
-        '<p class="t-note c-tertiary c2-vig">' + (c.vigencia || "") + "</p>" +
+        '<p class="c2-vig">' + (c.vigencia || "") + "</p>" +
         "</section>"
       );
     },

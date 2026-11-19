@@ -1,0 +1,20 @@
+{
+  "name": "Club Tambero · Maqueta",
+  "short_name": "Club Tambero",
+  "description": "Maqueta navegable de Club Tambero (MVP V0) con datos ficticios.",
+  "id": "./",
+  "start_url": "./#/a1",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "es-PE",
+  "dir": "ltr",
+  "background_color": "#af1380",
+  "theme_color": "#af1380",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    { "src": "assets/pwa/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/pwa/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/pwa/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

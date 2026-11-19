@@ -349,6 +349,8 @@ CT.screen = function (def) {
 
   /* ---------------- Escala del teléfono y modo nativo ---------------- */
   function isNative() {
+    // Instalada como app (PWA): siempre a pantalla completa
+    if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) return true;
     var narrow = Math.min(window.innerWidth, screen.width) <= 520;
     var coarse = window.matchMedia("(pointer: coarse)").matches;
     return narrow && (coarse || window.innerWidth <= 520);
@@ -404,6 +406,13 @@ CT.screen = function (def) {
     document.addEventListener("submit", function (e) { e.preventDefault(); });
     render();
     document.documentElement.classList.add("is-ready");
+
+    // PWA: instalable y disponible sin conexión (solo en http/https, no con doble clic)
+    if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+      var registerSW = function () { navigator.serviceWorker.register("sw.js").catch(function () {}); };
+      if (document.readyState === "complete") registerSW();
+      else window.addEventListener("load", registerSW);
+    }
   }
 
   // Arranca cuando todas las pantallas (scripts siguientes) ya se registraron
