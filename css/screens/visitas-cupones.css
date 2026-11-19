@@ -1,0 +1,694 @@
+/* ==========================================================================
+   4 · Visitas (R1–R3) · 5 · Cupones (C1–C3) · S2 Cupones vacío
+   ========================================================================== */
+
+/* ------------------------- Piezas compartidas ------------------------- */
+
+/* Lista blanca de movimientos / información (componente "Fila de movimiento") */
+.r1-list {
+  background: var(--bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.r1-mov {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 60px;
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+}
+.r1-mov-tile {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+}
+.r1-mov-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.r1-mov-title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.r1-mov-sub {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.r1-mov-delta {
+  flex: none;
+  width: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  white-space: nowrap;
+}
+.r1-mov-num {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.r1-mov-num.is-plus { color: var(--text-success); }
+.r1-mov-unit {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+/* Separador con sangría (alineado al texto, no al ícono) */
+.r1-sep {
+  height: 1px;
+  margin-left: 68px;
+  background: var(--bg-subtle);
+}
+
+/* Filas de "Más información" */
+.r1-info {
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.r1-info:active { background: var(--bg-muted); }
+.r1-info-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.r1-info-chev {
+  display: inline-flex;
+  color: var(--icon-secondary);
+}
+
+/* Ficha de regalo morada con ícono amarillo (R1) */
+.r1-gift { color: var(--icon-yellow); }
+
+/* Barra superior de R2 y C2: el ícono de volver queda a 22 px del borde, como el Figma */
+.appbar.vc-bar { padding: 0 10px; }
+
+/* Pasos numerados (C2 y R3) */
+.vc-steps {
+  display: flex;
+  flex-direction: column;
+}
+.vc-steps li {
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.vc-num {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-brand);
+  color: var(--text-on-brand);
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+/* ------------------------------- R1 · Visitas ------------------------------- */
+.r1-head {
+  background: var(--bg-brand);
+  padding-bottom: 14px;
+  overflow: hidden; /* la sombra del panel termina en el borde morado, como el Figma */
+}
+.r1-title { padding: 9px var(--space-5) 1px; }
+
+.r1-panel-wrap { padding: var(--space-4) var(--space-5) 0; }
+.r1-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 162px;
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  background: var(--bg-yellow);
+  box-shadow: 0 18px 30px -18px rgba(40, 0, 28, 0.6);
+  overflow: hidden;
+}
+.r1-panel-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.r1-panel-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.r1-kicker {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-on-yellow);
+}
+/* Número grande y "visitas acumuladas" (posiciones del Figma: 6 px y 24 px) */
+.r1-count {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  height: 48px;
+}
+.r1-count .t-display {
+  margin-top: 6px;
+  color: var(--text-brand-on-yellow);
+}
+.r1-count .t-m {
+  margin-top: 24px;
+  color: var(--text-on-yellow-strong);
+  white-space: nowrap;
+}
+.r1-panel-foot {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.r1-ratio {
+  align-self: flex-end;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-on-yellow-deep);
+}
+.r1-panel-note { color: var(--text-on-yellow-deep); }
+
+/* "+" de la marca, blanco al 22% */
+.r1-plus {
+  position: absolute;
+  left: 232px;
+  top: -40px;
+  width: 170px;
+  height: 170px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+.r1-plus::before,
+.r1-plus::after {
+  content: "";
+  position: absolute;
+  border-radius: 25px;
+  background: var(--bg-surface);
+}
+.r1-plus::before { left: 59px; top: 0; width: 51px; height: 170px; }
+.r1-plus::after  { left: 0; top: 59px; width: 170px; height: 51px; }
+
+/* Secciones */
+.r1-sec { padding: 28px var(--space-5) 0; }
+.r1-sec > .sec-title + *,
+.r1-sec > .sec-head + * { margin-top: var(--space-3); }
+.r1-sec > .sec-title + .r1-list { margin-top: 14px; }
+.r1-sec > .sec-head { min-height: 26px; }
+/* "Ver todas": área táctil de 40 px sin mover el diseño */
+.r1-link {
+  display: inline-block;
+  padding: 10px 0;
+  margin: -10px 0;
+}
+
+/* Cómo sumar más */
+.r1-how {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-card);
+}
+.r1-how-item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.r1-how-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+}
+
+.r1-end { height: var(--space-6); }
+
+/* Hoja "Cómo funcionan las visitas" */
+.r1-sheet-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+.r1-sheet-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.r1-sheet-note {
+  margin-top: var(--space-4);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.r1-sheet .btn { margin-top: var(--space-5); }
+
+/* ----------------------------- R2 · Mis visitas ----------------------------- */
+.r2-sum-wrap { padding: var(--space-2) var(--space-5) 0; }
+.r2-sum { padding: var(--space-4) var(--space-4) 18px; }
+.r2-sum-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.r2-sum-copy { min-width: 0; }
+.r2-sum-sep {
+  height: 1px;
+  margin: var(--space-3) 0;
+  border: 0;
+  background: var(--border-subtle);
+}
+.r2-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: 0;
+}
+.r2-stats dt {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.r2-stats dd {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.r2-sec { padding: var(--space-6) var(--space-5) 0; }
+.r2-sec > .sec-title + * { margin-top: 14px; }
+.r2-count {
+  padding: var(--space-4) var(--space-5) calc(var(--space-6) + var(--home-h));
+  text-align: center;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+/* ------------------------ R3 · Sorpresa desbloqueada ------------------------ */
+/* Fondo de marca de arriba abajo (también el pie fijo con los botones) */
+.scr.r3-scr { --scr-foot-bg: var(--bg-brand); color: var(--text-on-brand); }
+
+.r3 {
+  position: relative;
+  padding-bottom: var(--space-5);
+}
+.r3 > :not(.r3-confeti) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Barra con la X (ícono a 18 px del borde, como el Figma) */
+.r3-bar { padding: 0 10px; color: var(--icon-on-brand); }
+
+/* Confeti: piezas redondeadas en amarillo, blanco y rosa (posiciones del Figma) */
+.r3-confeti {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.r3-confeti i {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+  border-radius: 1.5px;
+  background: var(--c);
+  transform: translate(-50%, -50%) rotate(var(--r));
+  animation: r3-fall 900ms var(--ease-out) both;
+  animation-delay: var(--d);
+}
+
+.r3-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-6) var(--space-5) 0;
+}
+.r3-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 28px;
+  background: var(--bg-yellow);
+  color: var(--icon-brand);
+  animation: r3-pop 680ms var(--ease-out) both 80ms;
+}
+.r3-title {
+  margin-top: 20px;
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-on-brand);
+  white-space: nowrap;
+  animation: r3-pop-text 560ms var(--ease-out) both 240ms;
+}
+.r3-sub {
+  margin-top: 12px;
+  max-width: 350px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--text-on-brand-soft);
+  animation: r3-rise 440ms var(--ease-out) both 340ms;
+}
+
+.r3-card-wrap { padding: 0 var(--space-5); }
+.r3-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+  text-align: center;
+  animation: r3-rise 480ms var(--ease-out) both 420ms;
+}
+.r3-card-tile {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+}
+.r3-card-title {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--text-primary);
+}
+.r3-card-sub {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+.r3-next {
+  padding: 26px var(--space-5) 0;
+  color: var(--text-on-brand);
+  animation: r3-rise 480ms var(--ease-out) both 500ms;
+}
+.r3-next-title {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+}
+.r3-steps {
+  gap: var(--space-3);
+  margin-top: 12px;
+}
+.r3-steps li {
+  gap: var(--space-3);
+  color: var(--text-on-brand);
+}
+.r3-steps .vc-num {
+  background: var(--bg-yellow);
+  color: var(--text-on-yellow-strong);
+}
+
+.r3-foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 0 var(--space-5) calc(var(--home-h) + var(--space-3));
+}
+.r3-foot .btn--outline-light {
+  background: transparent;
+  color: var(--text-on-brand);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+@keyframes r3-pop {
+  0%   { opacity: 0; transform: scale(0.4) rotate(-14deg); }
+  60%  { opacity: 1; transform: scale(1.08) rotate(4deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes r3-pop-text {
+  0%   { opacity: 0; transform: scale(0.82); }
+  65%  { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes r3-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes r3-fall {
+  from { opacity: 0; transform: translate(-50%, -50%) translateY(-36px) rotate(calc(var(--r) - 140deg)); }
+  to   { opacity: 1; transform: translate(-50%, -50%) rotate(var(--r)); }
+}
+
+/* --------------------- C1 · Mis cupones (y C3, S2) --------------------- */
+.c1-title { padding: var(--space-2) var(--space-5) 2px; }
+.c1-seg { padding: var(--space-4) var(--space-5) 0; }
+/* Segmentado del Figma de Beneficios: opciones de 36 px y texto de 14 px */
+.c1-seg .seg-item {
+  height: 36px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.c1-notice {
+  padding: var(--space-4) var(--space-5) 0;
+}
+.c1-notice .ico { color: var(--icon-secondary); }
+.c1-list {
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) 0;
+}
+.c1-end { height: var(--space-6); }
+.c1-list .hablador-tag.is-long { letter-spacing: 0; }
+
+/* ------------------------- C2 · Detalle del cupón ------------------------- */
+.c2-media-wrap { padding: var(--space-1) var(--space-5) 0; }
+/* Foto del cupón: marcador con el ícono del producto mientras no está la foto */
+.c2-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, var(--bg-brand-tint) 0%, var(--bg-muted) 100%);
+  color: var(--icon-brand);
+  overflow: hidden;
+}
+.c2-hab {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  margin: -52px 0 0 36px;
+}
+.c2-info { padding: var(--space-4) var(--space-5) 0; }
+.c2-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.c2-title {
+  margin-top: var(--space-2);
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  color: var(--text-primary);
+}
+.c2-desc { margin-top: var(--space-2); }
+
+.c2-how-wrap { padding: var(--space-5) var(--space-5) 0; }
+.c2-how {
+  padding: var(--space-4);
+  container-type: inline-size;
+}
+.c2-how-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.c2-how-tile {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+}
+.c2-steps {
+  gap: 10px;
+  margin-top: 14px;
+  color: var(--text-primary);
+}
+.c2-steps li { gap: 10px; }
+/* A 390 px cada paso cabe en una línea, como en el Figma (puede rozar el padding) */
+@container (min-width: 310px) {
+  .c2-steps li > span:last-child { white-space: nowrap; }
+}
+.c2-code {
+  margin-top: 14px;
+  padding: 15px 11px 11px;
+  border: 1px solid var(--border-barcode);
+  border-radius: var(--radius-md);
+  background: var(--bg-barcode);
+  text-align: center;
+}
+.c2-barcode {
+  width: 100%;
+  max-width: 294px;
+  height: 80px;
+  margin: 0 auto;
+}
+.c2-code-num {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-on-barcode);
+  font-variant-numeric: tabular-nums;
+}
+
+.c2-cond { padding: var(--space-6) var(--space-5) calc(var(--space-6) + var(--home-h)); }
+.c2-cond-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.c2-cond-list .ico { color: var(--icon-secondary); }
+.c2-vig { margin-top: var(--space-4); }
+
+/* ------------------------ C3 · Usados y vencidos ------------------------ */
+.c3-list {
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+/* Efecto plomo con los colores del Figma C3 (en código: filtro sobre la imagen del hablador) */
+.c3-list .is-lead .hablador {
+  position: relative;
+  padding-top: 4px;
+  filter: none;
+  opacity: 1;
+  background: var(--bg-segment);
+  color: var(--text-tertiary);
+}
+.c3-list .is-lead .hablador-val { color: #a693a1; }
+.c3-list .cupon-title { color: var(--text-secondary); }
+.c3-list .chip .ico { color: var(--icon-secondary); }
+
+/* Sello USADO / VENCIDO encima del hablador, girado */
+.c3-stamp {
+  position: absolute;
+  left: 10px;
+  top: 72px;
+  height: 22px;
+  padding: 0 6px;
+  border-width: 2px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  transform: rotate(-8deg);
+}
+
+/* --------------------------- S2 · Cupones vacío --------------------------- */
+.s2-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px var(--space-8) 0;
+}
+/* Ilustración: dos boletos girados, el de adelante es un hablador */
+.s2-art {
+  position: relative;
+  width: 200px;
+  height: 140px;
+}
+.s2-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%) rotate(var(--r));
+}
+.s2-card--back {
+  --r: -8deg;
+  left: 82px;
+  top: 87px;
+  width: 120px;
+  height: 100px;
+  border-radius: var(--radius-card);
+  background: var(--bg-brand-tint);
+}
+.s2-card--front {
+  --r: 12deg;
+  left: 131px;
+  top: 62px;
+  width: 112px;
+  height: 88px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-yellow);
+  border-bottom: 3px solid var(--border-focus);
+  color: var(--icon-brand);
+  box-shadow: var(--shadow-card);
+}
+.s2-title { margin-top: 22px; }
+.s2-text { margin-top: 10px; }
+.s2-btn { margin-top: 22px; }

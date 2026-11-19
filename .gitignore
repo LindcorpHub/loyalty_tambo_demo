@@ -1,0 +1,5 @@
+# Herramientas de diseño locales (no se publican)
+.impeccable/
+PRODUCT.md
+# SVG intermedios exportados de Figma (no los usa la maqueta)
+assets/raw/

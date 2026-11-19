@@ -1,0 +1,335 @@
+/* ==========================================================================
+   6 · Perfil (E1–E3)
+   Figma: E1 618:2991 · E2 619:2991 · E3 710:2069
+   ========================================================================== */
+
+/* ------------------------------ E1 · Mi perfil ----------------------------- */
+
+/* Cabecera morada: título 24 · avatar 64 · 164px bajo la barra de estado */
+.e1-head {
+  padding: var(--space-2) var(--space-5) 38px;
+  background: var(--bg-brand);
+  color: var(--text-on-brand);
+}
+.e1-who {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: 22px;
+}
+.e1-avatar {
+  width: 64px;
+  height: 64px;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 800;
+}
+.e1-who-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.e1-since { color: var(--text-on-brand-soft); }
+
+/* Bloques: título de sección a 24 del bloque anterior, tarjeta a 13 del título */
+.e1-sec-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-5) 0;
+}
+/* "Mis datos" (con enlace) baja 1px bajo la cabecera morada, como en el Figma */
+.e1-sec:first-of-type .e1-sec-head { padding-top: 25px; }
+/* Enlace de 20px con área táctil de 40px */
+.e1-edit {
+  padding: 10px 0;
+  margin: -10px 0;
+}
+.e1-card {
+  margin: 13px var(--space-5) 0;
+  overflow: hidden;
+}
+
+/* Mis datos: filas de 48px, etiqueta 96 + valor alineado a la derecha */
+.e1-data-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 48px;
+  padding: 0 var(--space-4);
+}
+.e1-data-row + .e1-data-row { margin-top: 1px; }
+.e1-data-row + .e1-data-row::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: var(--space-4);
+  right: var(--space-4);
+  height: 1px;
+  background: var(--border-subtle);
+}
+.e1-data-row dt { flex: none; width: 96px; }
+.e1-data-row dd {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Fila con ficha de 40px · 64px de alto */
+.e1-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 64px;
+  padding: 6px var(--space-4);
+  text-align: left;
+  color: var(--text-primary);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+a.e1-row:active,
+button.e1-row:active,
+.e1-promo:active { background: var(--bg-muted); }
+.e1-promo { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.e1-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.e1-chev {
+  display: inline-flex;
+  color: var(--icon-tertiary);
+}
+.e1-tile {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+}
+/* Amarillo suave de las fichas de ayuda: el Figma no tiene variable para este tono */
+.e1-tile--soft {
+  background: #fff1a6;
+  color: var(--icon-brand);
+}
+
+/* Separadores de "Cuenta y ayuda": desde el texto hasta el borde derecho */
+.e1-list .e1-row + .e1-row { margin-top: 1px; }
+.e1-list .e1-row + .e1-row::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 68px;
+  right: 0;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* Interruptor del Figma: 48×28 con perilla de 24 */
+.e1-switch {
+  width: 48px;
+  height: 28px;
+}
+.e1-switch::after {
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+}
+.e1-switch[aria-checked="true"]::after { transform: translateX(20px); }
+/* En el Figma "Comunicación de promociones" cabe en una línea: el texto llega a 8px del interruptor */
+.e1-promo .e1-switch { margin-left: -4px; }
+
+/* Pie: Cerrar sesión · Eliminar mi cuenta · versión */
+.e1-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-6) var(--space-5);
+}
+/* Botón fantasma de 20px visibles con área táctil de 40px */
+.e1-delete {
+  margin: 6px 0;
+  padding: 0 var(--space-3);
+}
+
+/* Diálogo de cierre de sesión */
+.e1-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+/* --------------------------- E2 · Eliminar cuenta --------------------------- */
+
+/* Barra del Figma: botones de 44px a 8px del borde (E2 y E3) */
+.e2-bar,
+.e3-bar {
+  gap: 0;
+  padding: 0 var(--space-2);
+}
+.e2-bar .icon-btn,
+.e3-bar .icon-btn,
+.e2-bar .appbar-spacer,
+.e3-bar .appbar-spacer {
+  width: 44px;
+  height: 44px;
+}
+
+.e2-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-5) var(--home-h);
+}
+.e2-tile {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-card);
+  background: var(--bg-error);
+  color: var(--icon-error);
+}
+.e2-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Lo que se pierde: caja rosada con borde de 1px y relleno de 16.
+   Rosa pálido y borde rosa del Figma: no hay variable para estos dos tonos */
+.e2-loss {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid #f7d6dc;
+  border-radius: var(--radius-card);
+  background: #fdf3f5;
+}
+.e2-loss-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.e2-loss-item b { font-weight: 700; }
+.e2-loss-item .ico {
+  margin: 1px;
+  color: var(--icon-error);
+}
+/* El Figma mantiene el trazo de 2px al reducir el ícono a 18 */
+.e2-loss-item .ico path { stroke-width: 2.67; }
+
+/* Motivo (opcional): fichas seleccionables de 36px */
+.e2-why {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.e2-why-t {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.e2-why-t span {
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.e2-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.e2-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--bg-muted);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+/* Área táctil de 40px sin mover el diseño */
+.e2-chip::before {
+  content: "";
+  position: absolute;
+  inset: -3px -1px;
+}
+.e2-chip:active { transform: scale(0.97); }
+.e2-chip[aria-pressed="true"] {
+  background: var(--bg-brand-tint);
+  color: var(--text-brand);
+}
+
+/* Casilla con área táctil de 40px */
+.e2-body .check {
+  padding: 9px 0;
+  margin: -9px 0;
+}
+
+.e2-actions {
+  display: flex;
+  flex-direction: column;
+}
+/* "Mejor no": enlace alineado a la izquierda, 20px visibles a 8 del botón, área táctil de 40px */
+.e2-cancel {
+  align-self: flex-start;
+  height: 40px;
+  margin: -2px 0 -10px;
+  padding: 0;
+  border: 0;
+}
+
+/* -------------------------- E3 · Editar mis datos -------------------------- */
+.e3-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-5) calc(var(--home-h) + var(--space-6));
+}
+.e3-row {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+}
+.e3-row--half { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* El texto del campo arranca justo tras el relleno de 14 (sin el relleno propio del input) */
+.e3-form .field-box input { padding: 0; }
+
+/* Sin edición (.e3-lock): tipo y número de documento, fecha de nacimiento.
+   El Figma solo pinta en gris el documento (.e3-ro); la fecha va en blanco. */
+.e3-lock .field-box input { cursor: default; }
+/* Foco visible (borde de marca) sin el halo de "editable" */
+.e3-lock .field-box:focus-within { box-shadow: none; }
+.e3-ro .field-box { background: var(--bg-muted); }
+/* "DNI" del selector de tipo, deshabilitado */
+.e3-doc .field-box input { color: var(--text-tertiary); }
+.e3-doc .field-box > .ico:last-child { color: var(--icon-tertiary); }
+
+/* Celular: el Figma usa el ícono de 24 y deja el número alineado con los demás campos */
+.e3-cel .field-box > .ico:first-child {
+  width: 24px;
+  height: 24px;
+  margin-right: -4px;
+}

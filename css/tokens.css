@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Club Tambero · Tokens del sistema de diseño (Figma "8 · Sistema de diseño")
+   Solo tema claro. Nombres = variables de Figma con "/" → "-".
+   ========================================================================== */
+:root {
+  /* Fondos */
+  --bg-canvas: #f7f2f6;
+  --bg-surface: #ffffff;
+  --bg-muted: #f1eaef;
+  --bg-subtle: #eee4eb;
+  --bg-brand: #af1380;
+  --bg-brand-tint: #edd1e9;
+  --bg-brand-night: #1f1520;
+  --bg-yellow: #ffee0c;
+  --bg-inverse: #1f1520;
+  --bg-apple: #111111;
+  --bg-barcode: #fefefe;
+  --bg-barcode-chip: #f1eaee;
+  --bg-segment: #efe8ed;
+  --bg-segment-active: #fffffe;
+  --bg-success: #e2f4ea;
+  --bg-warning: #ffefd6;
+  --bg-error: #fde8eb;
+  --bg-error-input: #fffbfb;
+  --bg-danger: #c4162a;
+
+  /* Texto */
+  --text-primary: #1f1520;
+  --text-secondary: #4e3f4b;
+  --text-tertiary: #74636f;
+  --text-brand: #af1380;
+  --text-brand-soft: #af1380;
+  --text-on-brand: #ffffff;
+  --text-on-brand-soft: #edd1e9;
+  --text-on-yellow: #af1380;
+  --text-on-yellow-strong: #1f1520;
+  --text-on-yellow-deep: #4e3f4b;
+  --text-brand-on-yellow: #af1380;
+  --text-yellow: #ffee0c;
+  --text-on-barcode: #1f1521;
+  --text-on-barcode-secondary: #7d6c7a;
+  --text-on-barcode-chip: #4e3f4c;
+  --text-success: #0f7b4f;
+  --text-warning: #9a4a00;
+  --text-error: #c4162a;
+  --text-apple: #fffffd;
+
+  /* Íconos */
+  --icon-primary: #1f1520;
+  --icon-secondary: #4e3f4b;
+  --icon-tertiary: #74636f;
+  --icon-brand: #af1380;
+  --icon-on-brand: #ffffff;
+  --icon-yellow: #ffee0c;
+  --icon-on-yellow-strong: #1f1520;
+  --icon-on-barcode: #4e3f4c;
+  --icon-warning: #9a4a00;
+  --icon-error: #c4162a;
+
+  /* Bordes */
+  --border-default: #e2d5de;
+  --border-subtle: #eee4eb;
+  --border-surface: #ffffff;
+  --border-focus: #af1380;
+  --border-error: #c4162a;
+  --border-barcode: #e2d5df;
+  --border-stamp: #7d6c79;
+  --border-control: #cdbac7;
+
+  /* Espaciado */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* Radios */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-card: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-pill: 999px;
+
+  /* Sombras (offset + blur, tinte de marca) */
+  --shadow-card: 0 1px 2px rgba(31, 21, 32, 0.05), 0 4px 14px rgba(31, 21, 32, 0.06);
+  --shadow-barcode: 0 16px 32px rgba(94, 0, 66, 0.45), 0 1px 2px rgba(31, 21, 32, 0.06);
+  --shadow-fab: 0 10px 9px rgba(141, 0, 96, 0.6);
+  --shadow-sheet: 0 -12px 40px rgba(31, 20, 33, 0.18);
+  --focus-halo: 0 0 0 3px rgba(184, 0, 126, 0.14);
+
+  /* Tipografía · Schibsted Grotesk */
+  --font: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur: 320ms;
+}

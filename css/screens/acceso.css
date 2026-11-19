@@ -1,0 +1,444 @@
+/* ==========================================================================
+   2 · Acceso (A1–A5) · S4
+   ========================================================================== */
+
+/* Hoja blanca que sube sobre el banner (radio 24, solape 24) */
+.sheet-top {
+  position: relative;
+  z-index: 1;
+  margin-top: -24px;
+  padding: var(--space-6) var(--space-5) var(--space-8);
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  background: var(--bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* El texto de los campos empieza a 16 px del borde, como en el Figma
+   (Chrome agrega 2 px de relleno propio al <input>) */
+.a1-form .field-box input,
+.a2-form .field-box input,
+.a4-form .field-box input { padding: 0; }
+
+/* --------------------------- A1 · Iniciar sesión --------------------------- */
+.a1-hero {
+  position: relative;
+  height: 305px;
+  padding: var(--space-3) var(--space-5) 0;
+  background: var(--bg-brand);
+  color: var(--text-on-brand);
+  overflow: hidden;
+}
+.a1-hero .logo { width: 175px; height: auto; }
+.a1-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 190px;
+  margin-top: 3px;
+}
+.a1-hero-title {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+.a1-hero-sub {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-on-brand-soft);
+}
+.a1-tag {
+  position: absolute;
+  width: 76px;
+  height: 64px;
+  transform: rotate(var(--r));
+  animation: tag-in 700ms var(--ease-out) both;
+  animation-delay: var(--d);
+}
+/* Anclados a la derecha (Figma: x 292 / 256 / 296 en 390) para celulares más angostos */
+.a1-tag--1 { right: 22px; top: 40px;  --r: 6deg;  --d: 120ms; }
+.a1-tag--2 { right: 58px; top: 118px; --r: -6deg; --d: 220ms; }
+.a1-tag--3 { right: 18px; top: 198px; --r: 4deg;  --d: 320ms; }
+@keyframes tag-in {
+  from { opacity: 0; transform: translateY(-18px) rotate(calc(var(--r) * -2)) scale(0.9); }
+  to   { opacity: 1; transform: rotate(var(--r)); }
+}
+
+.a1-form { padding-bottom: var(--space-6); }
+/* Cada campo del Figma mide 79 px (1 px más que etiqueta + 6 + caja) */
+.a1-form .field { margin-bottom: 1px; }
+.a1-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+/* "¿Primera vez?": texto en dos líneas junto al botón, como en el Figma */
+.a1-first {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-1);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--bg-yellow);
+}
+.a1-first-sub { margin-top: 2px; }
+.a1-legal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-top: var(--space-1);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+/* ==========================================================================
+   Formulario de registro: A2 Crear cuenta · A3 Completar registro · S4 errores
+   (piezas compartidas con prefijo a2-)
+   ========================================================================== */
+
+/* Barra superior: 52 px, botones de 44 px a 8 px del borde (Figma) */
+.a2-bar { padding: 0 var(--space-2); }
+.a2-bar .icon-btn,
+.a2-bar .appbar-spacer {
+  width: 44px;
+  height: 44px;
+}
+
+/* Columna: 20 px entre bloques; abajo deja libre el indicador de inicio */
+.a2-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-5) calc(var(--space-4) + var(--home-h));
+}
+
+/* "Regístrate más rápido con" + Apple / Google (10 px) */
+.a2-quick {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.a2-quick-row {
+  display: flex;
+  gap: 10px;
+}
+.a2-quick-row .btn {
+  flex: 1 1 0;
+  min-width: 0;
+}
+/* En el Figma Apple mide 169 y Google 171 (de 350) */
+.a2-quick-row .btn--apple { flex-grow: 169; }
+.a2-quick-row .btn--secondary { flex-grow: 171; }
+
+/* Aire extra del Figma: antes de "Celular" (tras la ayuda de la fecha), en
+   "Tu cuenta", antes de "Contraseña" y, en A3, antes de los consentimientos */
+#a2-form .a2-cel { margin-top: 13px; }
+#a3-form .a2-cel { margin-top: 18px; }
+#a3-form .a2-consents { margin-top: 14px; }
+.a2-sec-gap { padding: 13px 0 2px; }
+
+/* Filas de dos campos: Documento (104) + N.° · Nombres + Apellidos */
+.a2-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  align-items: start;
+}
+.a2-row--doc { grid-template-columns: 104px minmax(0, 1fr); }
+
+/* Tipo de documento: el <select> real cubre toda la caja; la flecha es decorativa */
+.a2-select {
+  position: relative;
+  justify-content: flex-end;
+}
+.a2-select select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  padding: 0 42px 0 14px;
+  border-radius: inherit;
+  cursor: pointer;
+}
+.a2-select select:focus-visible { outline: none; }
+.a2-select .ico { pointer-events: none; }
+
+/* Contraseña: "Mínimo 8 caracteres" a la derecha de la etiqueta */
+.a2-pass {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: 10px;
+}
+.a2-pass .field-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: 1px;
+}
+.a2-pass-min {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+/* Medidor de seguridad: 4 barras de 4 px + etiqueta de 104 px */
+.a2-meter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.a2-meter-bar {
+  flex: 1 1 0;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--bg-subtle);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.a2-meter-label {
+  flex: none;
+  width: 104px;
+  padding-left: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.a2-meter[data-level="1"] .a2-meter-bar:nth-child(1) { background: var(--text-error); }
+.a2-meter[data-level="1"] .a2-meter-label { color: var(--text-error); }
+/* Ámbar de las barras "media": #e8a400 en el Figma, sin token */
+.a2-meter[data-level="2"] .a2-meter-bar:nth-child(-n+2) { background: #e8a400; }
+.a2-meter[data-level="2"] .a2-meter-label { color: var(--text-warning); }
+.a2-meter[data-level="3"] .a2-meter-bar:nth-child(-n+3),
+.a2-meter[data-level="4"] .a2-meter-bar { background: var(--text-success); }
+.a2-meter[data-level="3"] .a2-meter-label,
+.a2-meter[data-level="4"] .a2-meter-label { color: var(--text-success); }
+
+/* Consentimientos: 14 px entre casillas; el error va alineado al texto (34 px) */
+.a2-consents {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.a2-consent {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+/* "(Opcional)" en la casilla de ofertas solo cuando falta aceptar los términos (S4) */
+.a2-opt {
+  display: none;
+  color: var(--text-tertiary);
+}
+.a2-consents.has-error .a2-opt { display: block; }
+.a2-consent-msg { padding: 0 8px 0 34px; }
+
+/* Errores (S4): aviso general arriba y mensajes por campo */
+.a2-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: var(--space-3) 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg-error);
+  color: var(--text-error);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  animation: fade-in var(--dur) var(--ease-out) both;
+}
+.a2-alert .ico { margin-top: 1px; }
+.a2-form .field.is-error .field-hint { display: none; }
+/* En S4 el ícono del campo con error sigue gris; solo el borde y el mensaje van en rojo */
+.a1-form .field.is-error .field-box > .ico:first-child,
+.a2-form .field.is-error .field-box > .ico:first-child,
+.a4-form .field.is-error .field-box > .ico:first-child { color: var(--icon-tertiary); }
+.a2-msg-link {
+  font-weight: 600;
+  color: var(--text-brand);
+}
+
+/* "¿Ya tienes cuenta? Inicia sesión" (área táctil de 40 px en el enlace) */
+.a2-login {
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.a2-link {
+  display: inline-block;
+  padding: 10px 2px;
+  margin: -10px -2px;
+  font-weight: 700;
+  color: var(--text-brand);
+}
+.a2-link:active { opacity: 0.7; }
+
+/* ------------------- A3 · Completar registro (Google / Apple) ------------------- */
+/* Chip del correo verificado: 32 px, ícono del proveedor + correo + check */
+.a3-chip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 32px;
+  padding: 0 12px 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--bg-muted);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.a3-chip img { flex: none; }
+.a3-ok { color: var(--text-success); }
+.a3-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+/* El titular cae 1 px más abajo en el Figma (A3 y A4) */
+.a3-head .page-title {
+  position: relative;
+  top: 1px;
+}
+.a3-legal { padding-top: 0; }
+
+/* -------------------------- A4 · Recuperar contraseña -------------------------- */
+.a4-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-2) var(--space-5) calc(var(--space-4) + var(--home-h));
+}
+.a4-tile {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-card);
+  background: var(--bg-brand-tint);
+  color: var(--icon-brand);
+}
+.a4-form,
+.a4-done {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.a4-form { gap: 28px; }
+.a4-form[hidden],
+.a4-done[hidden] { display: none; }
+.a4-tip,
+.a4-sent {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: 14px var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+/* El aviso es un enlace: devuelve a A1 a quien entró con Google o Apple */
+.a4-tip {
+  background: var(--bg-canvas);
+  color: var(--text-secondary);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.a4-tip:active { background: var(--bg-muted); }
+.a4-tip .ico { color: var(--icon-secondary); }
+.a4-sent {
+  background: var(--bg-success);
+  color: var(--text-success);
+  font-weight: 600;
+  animation: fade-in var(--dur) var(--ease-out) both;
+}
+
+/* ------------------------------- A5 · Bienvenida ------------------------------- */
+/* Inicio de fondo (socio nuevo): cabecera más compacta que la de B1 porque lleva
+   el enlace "Ver mis visitas" en vez del chip. Medidas del frame A5. */
+.scr[data-screen="a5"] .b1-head { height: 280px; }
+.scr[data-screen="a5"] .b1-head-copy {
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+.scr[data-screen="a5"] .b1-chip-row {
+  height: 28px;
+  padding-top: 0;
+}
+.scr[data-screen="a5"] .b1-code-wrap { margin-top: -92px; }
+
+/* Enlace "Ver mis visitas" en la cabecera morada */
+.a5-visits {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-on-brand);
+}
+.a5-visits:active { opacity: 0.7; }
+
+/* Velo del Figma A5: 55 % (el de las capas es 48 %) */
+.a5-layer { background: rgba(31, 21, 32, 0.55); }
+
+/* Hoja: 24 px a los lados, 14 px entre piezas; arriba queda en y=345 como en el Figma */
+.a5-sheet {
+  display: flex;
+  flex-direction: column;
+  padding: 12px var(--space-6) calc(var(--home-h) + 46px);
+  text-align: center;
+  touch-action: none;
+  transition: translate var(--dur) var(--ease-out);
+}
+.a5-sheet.is-dragging { transition: none; }
+.a5-sheet:focus { outline: none; }
+/* Asa 36×4 · #dccbd6 en el Figma, sin token */
+.a5-sheet::before {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  margin: 0 auto 14px;
+  background: #dccbd6;
+}
+/* Imagen del banner (API welcome_modal) · 342×171, radio 14 */
+.a5-photo {
+  width: 100%;
+  height: 171px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  background: var(--bg-muted);
+  pointer-events: none;
+  user-select: none;
+}
+.a5-title,
+.a5-text,
+.a5-cta { margin-top: 14px; }
+/* El titular cae 1 px más abajo en el Figma */
+.a5-title {
+  position: relative;
+  top: 1px;
+  color: var(--text-primary);
+}
+.a5-later {
+  align-self: center;
+  margin-top: var(--space-1);
+  padding: 10px var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+}

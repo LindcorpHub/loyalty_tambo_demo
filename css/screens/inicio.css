@@ -1,0 +1,688 @@
+/* ==========================================================================
+   3 · Inicio y tarjeta (B1–B2) · estados S1, S3, S5, S6, S7
+   ========================================================================== */
+
+/* ------------------------------- B1 · Inicio ------------------------------- */
+.b1-head {
+  height: 280px;
+  background: var(--bg-brand);
+  color: var(--text-on-brand);
+}
+.b1-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-5) 0;
+}
+.b1-head-row .logo { width: 175px; height: auto; }
+/* El saludo va 8 px bajo el logo (Figma: el bloque de copia se monta sobre la fila del logo) */
+.b1-head-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5) 0;
+}
+.b1-count {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.b1-count .t-m { max-width: 170px; }
+.b1-chip-row {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding-top: var(--space-1);
+}
+
+.b1-code-wrap {
+  position: relative;
+  z-index: 1;
+  margin-top: -88px;
+}
+.b1-code {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--bg-barcode);
+  box-shadow: var(--shadow-barcode);
+}
+.b1-code-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.b1-expand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-brand-on-yellow);
+}
+.b1-code-bars {
+  display: flex;
+  justify-content: center;
+}
+.b1-code-bars .barcode { width: 300px; height: 60px; }
+.b1-code-num {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-on-barcode);
+  font-variant-numeric: normal;
+}
+.b1-code-note {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--text-on-barcode-secondary);
+  padding: 0 4px;
+}
+
+/* Por encima de la sombra de la tarjeta del código (en el Figma la sombra queda detrás) */
+.b1-unlock-wrap { position: relative; z-index: 2; padding-top: var(--space-5); }
+.b1-unlock {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 109px;
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--bg-yellow);
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.b1-unlock:active { transform: scale(0.985); }
+.b1-unlock-tile { color: var(--icon-yellow); position: relative; z-index: 1; }
+.b1-unlock-main {
+  position: relative;
+  top: -1px;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.b1-unlock-kicker {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-on-yellow);
+}
+.b1-unlock-bar { margin-top: var(--space-1); }
+.b1-unlock-sub {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-on-yellow-deep);
+}
+.b1-unlock-chev {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  color: var(--icon-on-yellow-strong);
+}
+/* "+" de la marca, blanco al 22% */
+.b1-plus {
+  position: absolute;
+  left: 270px;
+  top: -30px;
+  width: 120px;
+  height: 120px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+.b1-plus::before,
+.b1-plus::after {
+  content: "";
+  position: absolute;
+  border-radius: 18px;
+  background: var(--bg-surface);
+}
+.b1-plus::before { left: 42px; top: 0; width: 36px; height: 120px; }
+.b1-plus::after  { left: 0; top: 42px; width: 120px; height: 36px; }
+
+.b1-sec { padding-top: 28px; }
+.b1-cupones { padding-top: var(--space-3); }
+
+/* ------------------------- B2 · Mi tarjeta (609 / 610) ------------------------- */
+/* Barra: cerrar 44 + segmentado centrado + hueco 44 (Figma 609:3023) */
+.b2-bar {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 var(--space-2);
+}
+.b2-close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--icon-on-brand);
+  transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.b2-close:active { transform: scale(0.94); background: rgba(255, 255, 255, 0.12); }
+.b2-bar-spacer { flex: none; width: 44px; }
+
+/* Segmentado sobre morado · píldora de 38 de alto con opciones de 32 */
+.b2-seg {
+  flex: none;
+  display: flex;
+  gap: 2px;
+  margin: 0 auto;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.18);
+}
+.b2-seg-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-on-brand);
+  white-space: nowrap;
+  transition: background-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+}
+/* Área táctil de 40 px sin cambiar el dibujo */
+.b2-seg-item::after { content: ""; position: absolute; inset: -4px -1px; }
+a.b2-seg-item:active { background: rgba(255, 255, 255, 0.12); }
+.b2-seg-item[aria-selected="true"] {
+  background: var(--bg-surface);
+  color: var(--text-brand);
+}
+
+/* Sombra del pase y del cupón de caja, medida sobre los PNG del Figma
+   (más marcada bajo la tarjeta y casi nula a los lados que --shadow-barcode) */
+.b2-pass,
+.b2c-card { box-shadow: 0 24px 34px -14px rgba(94, 0, 66, 0.75); }
+
+/* Pase: franja amarilla con logo positivo + bloque blanco con línea de corte y el código */
+.b2-pass {
+  margin: 4px var(--space-5) 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--bg-barcode);
+}
+.b2-pass-top {
+  padding: var(--space-5);
+  background: var(--bg-yellow);
+  color: var(--text-on-yellow-strong);
+}
+.b2-pass-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.b2-pass-brand .logo { width: 175px; height: auto; }
+.b2-pass-club { color: var(--text-on-yellow); white-space: nowrap; }
+.b2-pass-name { margin-top: var(--space-4); }
+.b2-pass-since {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--space-4);
+}
+.b2-pass-since .t-over { color: var(--text-on-yellow); }
+
+/* Bloque del código (pase y cupón de caja) · siempre blanco.
+   Arriba, solo la línea de corte punteada (trazos de 4 px cada 6 px); sin muescas. */
+.b2-code {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px var(--space-5) 20px;
+  background: var(--bg-barcode);
+  text-align: center;
+}
+.b2-code::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--border-barcode) 4px, transparent 4px) 4px 0 / 6px 2px repeat-x;
+}
+.b2-code .chip { margin-bottom: var(--space-3); }
+.b2-barcode { width: 302px; height: 104px; }
+.b2-code-num {
+  margin-top: var(--space-3);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  font-variant-numeric: normal;
+  color: var(--text-on-barcode);
+}
+.b2-code-note {
+  margin-top: var(--space-3);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-on-barcode-secondary);
+}
+
+/* Badges oficiales de Wallet (Apple 232×56 negro radio 10 · Google 290×56 píldora #1f1f1f) y nota */
+.b2-wallet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: var(--space-6);
+}
+.b2-wallet-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  height: 56px;
+  padding: 0 var(--space-6);
+  border-radius: 10px;
+  background: #000;
+  color: #fff;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.b2-wallet-btn:active { transform: scale(0.98); }
+.b2-wallet-btn--apple { min-width: 232px; padding: 0 26px 0 24px; }
+.b2-wallet-btn--google {
+  min-width: 290px;
+  gap: 13px;
+  border-radius: var(--radius-pill);
+  background: #1f1f1f;
+}
+.b2-wallet-glyph {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+}
+.b2-wallet-glyph--apple { width: 32px; }
+.b2-wallet-glyph--google { width: 28px; }
+.b2-wallet-txt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+.b2-wallet-pre { font-size: 12px; line-height: 14px; font-weight: 500; }
+.b2-wallet-name { font-size: 18.5px; line-height: 22px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+.b2-wallet-btn--google .b2-wallet-name { font-size: 17px; letter-spacing: 0; }
+.b2-wallet-note {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-on-brand-soft);
+}
+
+/* Paso a los cupones: "Tus 4 beneficios disponibles" */
+.b2-benef {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 76px;
+  margin-top: var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: 0 12px 28px rgba(94, 0, 66, 0.28);
+  transition: transform var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.b2-benef:active { transform: scale(0.985); background: var(--bg-muted); }
+.b2-benef-tile { width: 40px; height: 40px; }
+.b2-benef-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.b2-benef-title { font-size: 14px; line-height: 20px; font-weight: 600; }
+.b2-benef-sub {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.b2-benef-chev { display: inline-flex; color: var(--icon-secondary); }
+
+/* Aire final sobre el indicador de inicio */
+.b2-end { height: calc(var(--home-h) + var(--space-6)); }
+
+/* ------------------------- B2 · Caja: cupones (611) ------------------------- */
+/* Carrusel: un cupón por vista, se desliza con snap */
+.b2c-track {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  /* aire para la sombra del cupón, compensado abajo */
+  padding: 4px 0 52px;
+  margin-bottom: -52px;
+}
+.b2c-track::-webkit-scrollbar { display: none; }
+/* Sin contorno de foco: las flechas del presentador lo enfocan y el Figma no lo muestra */
+.b2c-track:focus,
+.b2c-track:focus-visible { outline: none; }
+.b2c-slide {
+  flex: 0 0 100%;
+  padding: 0 var(--space-5);
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+.b2c-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--bg-barcode);
+}
+.b2c-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: var(--space-5);
+}
+/* Hablador del paso por caja · cuadro amarillo plano 72×84, radio 10, sin franja magenta */
+.hablador.b2c-hab {
+  flex: none;
+  width: 72px;
+  height: 84px;
+  gap: 3px;
+  border-bottom: 0;
+  border-radius: 10px;
+}
+.b2c-hab .hablador-val { position: relative; top: 1px; }
+.b2c-hab .hablador-cur { font-size: 13px; line-height: 16px; padding: 2px 4px 0 0; }
+.b2c-hab .hablador-num { font-size: 24px; line-height: 26px; }
+.b2c-hab--long .hablador-num { font-size: 20px; }
+.b2c-info {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.b2c-kicker { color: var(--text-brand); }
+.b2c-title { color: var(--text-on-barcode); }
+.b2c-line {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-on-barcode-secondary);
+}
+
+/* Puntos de página y ayuda */
+.b2c-pager {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: var(--space-6);
+}
+.b2c-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 8px;
+}
+.b2c-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: width var(--dur-fast) var(--ease-out), height var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.b2c-dot.is-on { width: 8px; height: 8px; background: var(--bg-surface); }
+.b2c-hint {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-on-brand-soft);
+}
+.b2c-next { margin-top: var(--space-5); }
+
+/* ------------------------------ S1 · Inicio cargando ------------------------------ */
+.s1-head-copy,
+.s1-code,
+.s1-cupon-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.s1-head-copy .skel,
+.s1-code .skel,
+.s1-unlock .skel,
+.s1-sec .skel,
+.s1-cupon .skel { display: block; }
+/* Tonos del Figma: barras #eee4eb, bloques grandes #f3ecf1, sobre morado blanco al 20%.
+   El brillo pasa encima sin cambiar el tono base. */
+.s1-code .skel,
+.s1-sec .skel,
+.s1-cupon-body .skel {
+  background-image: linear-gradient(90deg, var(--bg-subtle) 0%, #f5eff3 40%, var(--bg-subtle) 80%);
+}
+.s1-unlock .skel,
+.s1-cupon .s1-cupon-hab {
+  background-image: linear-gradient(90deg, #f3ecf1 0%, #f8f4f7 40%, #f3ecf1 80%);
+}
+.s1-head-copy .skel--on-brand {
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0.2) 80%);
+}
+.s1-head-copy {
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-5) 0;
+}
+.s1-sk-hola { width: 90px; height: 16px; }
+.s1-sk-num { width: 220px; height: 48px; border-radius: var(--radius-md); }
+.s1-sk-chip { width: 180px; height: 24px; }
+
+.s1-code {
+  align-items: stretch;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--bg-barcode);
+  box-shadow: var(--shadow-card);
+}
+.s1-code-top { display: flex; justify-content: space-between; }
+.s1-sk-label { width: 120px; height: 16px; }
+.s1-sk-link { width: 60px; height: 16px; }
+.s1-sk-bars { height: 60px; }
+.s1-sk-numero { width: 150px; height: 14px; align-self: center; }
+
+.s1-unlock { padding-top: var(--space-5); }
+.s1-sk-unlock { height: 84px; border-radius: var(--radius-card); }
+
+.s1-sec {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 28px;
+}
+.s1-sk-sec { width: 130px; height: 22px; }
+.s1-sk-all { width: 60px; height: 16px; }
+
+.s1-cupones { padding-top: var(--space-3); }
+/* Cupón en carga: talón plano y cuerpo blanco, sin sombra ni perforación (como el Figma) */
+.s1-cupon {
+  display: flex;
+  height: 104px;
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+.s1-cupon .s1-cupon-hab { flex: none; width: 92px; height: 100%; border-radius: 0; }
+.s1-cupon-body { flex: 1 1 auto; min-width: 0; padding: 15px var(--space-4); }
+.s1-cupon-body .skel { flex: none; }
+.s1-sk-l1 { width: 80%; height: 14px; }
+.s1-sk-l2 { width: 55%; height: 12px; margin-top: 10px; }
+.s1-sk-act { width: 110px; height: 22px; margin-top: var(--space-4); }
+
+/* ---------------------------- S3 · Inicio sin conexión ---------------------------- */
+.s3-off-wrap { padding-top: var(--space-5); }
+.s3-off {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-5);
+  text-align: center;
+}
+.s3-off-tile { width: 40px; height: 40px; }
+.s3-off-title { margin-top: var(--space-3); }
+.s3-off-text { max-width: 310px; margin-top: var(--space-2); }
+.s3-retry { margin-top: 14px; gap: 6px; }
+/* El giro de carga va en morado sobre el botón blanco */
+.s3-retry.is-loading::after { border-color: var(--icon-brand) var(--icon-brand) var(--icon-brand) transparent; }
+.s3-swap { animation: fade-in var(--dur) var(--ease-out) both; }
+
+/* -------------------------- S5 · Inicio con resultado -------------------------- */
+/* La tarjeta del desbloqueo cambia a magenta y abre R3 */
+.b1-unlock.s5-unlock {
+  min-height: 0;
+  background: var(--bg-brand);
+}
+.s5-unlock .b1-unlock-tile { background: var(--bg-yellow); color: var(--icon-brand); }
+.s5-unlock .b1-unlock-kicker { color: var(--text-yellow); }
+.s5-unlock .t-m { color: var(--text-on-brand); }
+.s5-unlock .b1-unlock-sub { color: var(--text-on-brand-soft); }
+.s5-unlock .b1-unlock-chev { color: var(--icon-on-brand); }
+
+/* ------------------------ S6 · Aún sin visitas (Visitas) ------------------------ */
+.s6-head {
+  padding: var(--space-2) var(--space-5) 14px;
+  background: var(--bg-brand);
+  color: var(--text-on-brand);
+}
+.s6-panel {
+  position: relative;
+  overflow: hidden;
+  margin-top: 18px;
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  background: var(--bg-yellow);
+  color: var(--text-on-yellow-strong);
+}
+.s6-panel-row,
+.s6-progress { position: relative; z-index: 1; }
+.s6-panel-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.s6-kicker {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-on-yellow);
+}
+.s6-count {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-top: 2px;
+}
+.s6-count .t-display { color: var(--text-brand-on-yellow); }
+.s6-tile { color: var(--icon-yellow); }
+.s6-progress { margin-top: 2px; }
+.s6-of {
+  text-align: right;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-on-yellow-deep);
+}
+.s6-progress .progress { display: block; margin-top: var(--space-2); }
+.s6-left {
+  margin-top: var(--space-2);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-on-yellow-deep);
+}
+/* "+" de la marca, blanco al 22% */
+.s6-plus {
+  position: absolute;
+  right: -52px;
+  top: -40px;
+  width: 170px;
+  height: 170px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+.s6-plus::before,
+.s6-plus::after {
+  content: "";
+  position: absolute;
+  border-radius: 25px;
+  background: var(--bg-surface);
+}
+.s6-plus::before { left: 59px; top: 0; width: 51px; height: 170px; }
+.s6-plus::after { left: 0; top: 59px; width: 170px; height: 51px; }
+
+.s6-sec { padding-top: 28px; }
+.s6-how {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: var(--space-4) var(--space-2);
+}
+.s6-how-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+.s6-how-tile { width: 44px; height: 44px; border-radius: var(--radius-md); }
+.s6-how-item p {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.s6-empty {
+  margin-top: var(--space-3);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+}
+.s6-empty .t-body-s { margin-top: var(--space-1); }
+.s6-list { margin-top: var(--space-3); }
+.s6-row-tile { width: 40px; height: 40px; }
+
+/* ------------------------------ S7 · Nuevo periodo ------------------------------ */
+.s7-sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 12px var(--space-6) var(--home-h);
+  text-align: center;
+}
+.s7-sheet::before { width: 36px; height: 4px; margin: 0; border-radius: 2px; }
+.hablador.s7-hab { width: auto; height: auto; padding: 6px 20px 7px; }
+.s7-hab .hablador-tag { font-size: 13px; line-height: 16px; }
+.s7-hab .hablador-num { font-size: 28px; line-height: 31px; }
+.s7-title { max-width: 342px; }
+.s7-cta { align-self: stretch; }
+/* Enlace de 20 px con área táctil de 40 px */
+.s7-link { padding: 10px var(--space-2); margin: -10px 0; }
