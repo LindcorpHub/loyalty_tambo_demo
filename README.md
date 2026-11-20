@@ -5,7 +5,7 @@ Maqueta navegable del programa de lealtad **Club Tambero**, construida a partir 
 - 24 pantallas: Acceso (A1–A5), Inicio y tarjeta (B1–B2), Visitas (R1–R3), Cupones (C1–C3), Perfil (E1–E3) y Estados (S1–S7).
 - En computadora se muestra dentro de un teléfono, con el índice de pantallas a la izquierda y una nota de cada pantalla a la derecha (flechas ← → para recorrerlas).
 - En un celular se abre a pantalla completa, como la web real. Para saltar entre pantallas, toca la pestaña del borde izquierdo.
-- La socia de ejemplo es **Carla Mendoza**. La contraseña ya viene escrita (`Tambo123`): basta tocar **Iniciar sesión**; con el correo vacío se entra como Carla. Cualquier otra contraseña muestra el aviso de credenciales incorrectas.
+- La socia de ejemplo es **Carla Mendoza**. La contraseña ya viene escrita (`Tambo123`): basta tocar **Iniciar sesión**; con el correo vacío se entra como Carla. Cualquier otra contraseña muestra el aviso de credenciales incorrectas. **Continuar con Apple / Google** también entra como Carla, directo al Inicio; el registro con esas cuentas (A3) se ve desde **Crear cuenta**.
 
 ## Verla en tu computadora
 

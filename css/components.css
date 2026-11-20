@@ -204,6 +204,7 @@
 .btn--ghost     { background: transparent; color: var(--text-brand); }
 .btn--ghost-danger { background: transparent; color: var(--text-error); }
 .btn.is-loading { color: transparent !important; pointer-events: none; }
+.btn.is-loading > * { visibility: hidden; } /* también oculta íconos de imagen (logo de Google) */
 .btn.is-loading::after {
   content: "";
   position: absolute;
@@ -214,6 +215,8 @@
   border-color: rgba(255, 255, 255, 0.95) rgba(255, 255, 255, 0.95) rgba(255, 255, 255, 0.95) transparent;
   animation: spin 0.7s linear infinite;
 }
+/* Botón blanco (Google): el giro va en tinta oscura para que se vea */
+.btn--secondary.is-loading::after { border-color: var(--text-primary) var(--text-primary) var(--text-primary) transparent; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Enlace de texto en marca */

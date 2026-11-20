@@ -180,7 +180,8 @@
     bg: "var(--bg-surface)",
     note:
       "Banner de campaign-service (<b>login_hero</b>) y acceso con correo, Apple o Google. " +
-      "Escribe cualquier correo y toca <b>Iniciar sesión</b> para entrar como Carla; si cambias la contraseña verás el aviso neutro «Correo o contraseña incorrectos».",
+      "Escribe cualquier correo y toca <b>Iniciar sesión</b> para entrar como Carla; si cambias la contraseña verás el aviso neutro «Correo o contraseña incorrectos». " +
+      "<b>Apple</b> y <b>Google</b> también entran directo al Inicio: Carla ya es socia. El registro con esas cuentas (A3) se ve desde <b>Crear cuenta</b>.",
     render: function () {
       return (
         heroA1() +
@@ -195,8 +196,8 @@
         ui.btn({ text: "Iniciar sesión", block: true, type: "submit", attrs: { id: "a1-submit" } }) +
         '<p class="or">o continúa con</p>' +
         '<div class="stack" style="gap:10px">' +
-        ui.btn({ text: "Continuar con Apple", variant: "apple", block: true, go: "a3/apple", iconHtml: APPLE }) +
-        ui.btn({ text: "Continuar con Google", variant: "secondary", block: true, go: "a3/google", iconHtml: GOOGLE }) +
+        ui.btn({ text: "Continuar con Apple", variant: "apple", block: true, iconHtml: APPLE, attrs: { "data-sso": "apple" } }) +
+        ui.btn({ text: "Continuar con Google", variant: "secondary", block: true, iconHtml: GOOGLE, attrs: { "data-sso": "google" } }) +
         "</div>" +
         '<div class="a1-first">' +
         '<div class="grow"><p class="t-m c-primary">¿Primera vez?</p><p class="t-body-s c-primary a1-first-sub">Crea tu cuenta y disfruta los beneficios de Club Tambero.</p></div>' +
@@ -252,6 +253,19 @@
           }
           ctx.go("b1");
         }, 650);
+      });
+
+      // Apple / Google: la cuenta ya está vinculada a Carla, así que inician sesión y van al Inicio.
+      // Solo una cuenta nueva pasaría por A3 (completar registro), y a esa se llega desde Crear cuenta.
+      form.addEventListener("click", function (e) {
+        var sso = e.target.closest("[data-sso]");
+        if (!sso || form.querySelector(".btn.is-loading")) return;
+        fieldError(mail, "");
+        fieldError(pass, "");
+        credError(false);
+        sso.classList.add("is-loading");
+        sso.setAttribute("aria-busy", "true");
+        timer = setTimeout(function () { ctx.go("b1"); }, 650);
       });
       return function () { clearTimeout(timer); };
     },
