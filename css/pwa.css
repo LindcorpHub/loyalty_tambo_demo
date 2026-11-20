@@ -1,0 +1,291 @@
+/* ==========================================================================
+   PWA: invitación a instalar, permiso de notificaciones y notificación de ejemplo.
+   No están en el Figma: siguen sus hojas (A5, R1) y sus tokens.
+   ========================================================================== */
+
+/* Con la app ya instalada no se ofrece instalarla */
+html.has-app [data-pwa-install] { display: none !important; }
+
+/* ------------------------------- Hojas ------------------------------- */
+.pwa-sheet .btn,
+.push-sheet .btn { margin-top: var(--space-6); }
+
+.pwa-app {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.pwa-app-icon {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 13px; /* proporción de un ícono de pantalla de inicio */
+  box-shadow: 0 1px 2px rgba(31, 21, 32, 0.12), 0 6px 14px rgba(94, 0, 66, 0.18);
+}
+.pwa-app-copy { min-width: 0; }
+.pwa-app-name {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.pwa-app-sub {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+.pwa-title { margin-top: var(--space-5); }
+.pwa-sheet-tile + .pwa-title { margin-top: var(--space-4); }
+.pwa-text { margin-top: var(--space-2); }
+
+/* Beneficios de instalar */
+.pwa-perks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+.pwa-perks li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Pasos numerados (iPhone, Android sin instalación directa, permiso bloqueado) */
+.pwa-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: var(--space-4);
+}
+.pwa-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.pwa-step-num {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg-brand-tint);
+  color: var(--text-brand);
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 700;
+}
+.pwa-step-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 3px;
+}
+.pwa-step-main {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.pwa-step-main b { font-weight: 700; }
+.pwa-step-sub {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+/* Tecla de la interfaz del navegador (Compartir, ···, Agregar a inicio) */
+.pwa-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 0 7px;
+  margin: 0 1px;
+  border-radius: 6px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: -5px;
+}
+.pwa-key .ico { color: var(--icon-brand); }
+.pwa-step-sub .pwa-key { height: 20px; padding: 0 5px; vertical-align: -5px; }
+
+.pwa-later {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  margin-top: var(--space-2);
+}
+
+.pwa-foot {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.pwa-foot .ico { color: var(--icon-secondary); }
+.pwa-foot--center { justify-content: center; text-align: center; }
+
+/* Permiso de notificaciones: vista previa sobre una pantalla bloqueada morada */
+.push-preview {
+  position: relative;
+  padding: 26px 12px 18px;
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(120% 90% at 85% 0%, rgba(255, 238, 12, 0.22) 0%, rgba(255, 238, 12, 0) 55%),
+    linear-gradient(165deg, #c21a8f 0%, var(--bg-brand) 45%, #7a0b58 100%);
+  overflow: hidden;
+}
+.push-preview::before {
+  /* hora de la pantalla bloqueada */
+  content: "9:41";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---------------------- Notificación (tarjeta y banner) ---------------------- */
+.notif {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 13px 12px 11px;
+  border-radius: 20px;
+  background: rgba(252, 249, 251, 0.94);
+  box-shadow: 0 1px 2px rgba(31, 21, 32, 0.08), 0 10px 28px rgba(31, 21, 32, 0.22);
+  text-align: left;
+}
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .notif {
+    background: rgba(252, 250, 251, 0.9);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    backdrop-filter: blur(18px) saturate(1.3);
+  }
+}
+/* En la vista previa (sobre fondo morado) va casi opaca para no teñirse de rosado */
+.notif--static,
+.notif.notif--static {
+  background: rgba(253, 250, 252, 0.95);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.notif-icon {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+}
+.notif-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.notif-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+.notif-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.notif-time {
+  flex: none;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.notif-body {
+  margin-top: 1px;
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Banner que baja dentro del teléfono (presentador o navegador sin notificaciones) */
+.notif-banner {
+  position: absolute;
+  z-index: 40;
+  top: 10px;
+  left: 8px;
+  right: 8px;
+  display: block;
+  padding: 0;
+  border-radius: 20px;
+  text-align: left;
+  animation: notif-in 520ms var(--ease-out) both;
+  -webkit-tap-highlight-color: transparent;
+}
+.notif-banner .notif { width: 100%; }
+.notif-banner:active .notif { transform: scale(0.98); }
+.notif-banner .notif { transition: transform var(--dur-fast) var(--ease-out); }
+.notif-banner.is-closing { animation: notif-out 260ms var(--ease-in-out) both; }
+html.is-native .notif-banner { top: calc(var(--status-h) + 6px); }
+@keyframes notif-in {
+  from { opacity: 0; transform: translateY(-120%); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes notif-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(-110%); }
+}
+
+/* ------------------------- Visitas que envían aviso ------------------------- */
+.r1-mov--tap {
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.r1-mov--tap:active { background: var(--bg-muted); }
+
+.push-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 0 var(--space-1);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+.push-hint .ico { color: var(--icon-brand); }

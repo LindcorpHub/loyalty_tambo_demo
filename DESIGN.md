@@ -336,6 +336,12 @@ Un solo boleto de mínimo 108px: talón amarillo (hablador M) a la izquierda y c
 ### Sheets / Dialogs / Toasts
 - Velo morado noche al 55%. Hoja inferior blanca con esquinas superiores de 24px, asa de 40×5 y entrada deslizante de 420ms. Diálogo centrado con radio 24px y relleno 24/20. Toast morado noche, radio 12px, 14px/600, encima de la barra inferior.
 
+### App instalable (fuera del Figma)
+Piezas agregadas para la demo PWA; reutilizan la hoja inferior y los tokens.
+- **Invitación a instalar:** fila de app (ícono de 56px radio 13 con sombra morada, nombre 16px/700 y subtítulo Note), titular Headline sin mayúsculas, beneficios con fichas de 36px y botón primario a ancho completo; "Ahora no" como enlace centrado de 44px.
+- **Pasos:** números en círculo de 26px en rosa de marca (13px/700 morado), paso 14px/500 y ayuda Note en terciario. Las teclas del navegador (Compartir, ···, Agregar a inicio) van como chip blanco de 22px, radio 6, borde por defecto e ícono morado de 16px.
+- **Notificación:** tarjeta translúcida de radio 20 con ícono de app de 38px (radio 9), título 15px/700, "ahora" Note y texto 14px/19px hasta 3 líneas. Como banner baja desde arriba dentro del teléfono (520ms) y se va a los 6s; en la hoja de permiso aparece sobre una pantalla bloqueada morada.
+
 ### Skeletons
 - Bloques con el radio de la pieza que reemplazan, en barrido atenuado→sutil de 1.4s; sobre cabeceras moradas, el barrido es blanco al 14–26%.
 

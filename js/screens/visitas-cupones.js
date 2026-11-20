@@ -103,10 +103,13 @@
      ------------------------------------------------------------------------ */
 
   /* Fila de movimiento (componente "Fila de movimiento": Compra / Devolución) */
+  // Tocar una visita envía su notificación de ejemplo (js/pwa.js)
   function movRow(m) {
     var dev = m.tipo === "devolucion";
     return (
-      '<li class="r1-mov">' +
+      '<li><button type="button" class="r1-mov r1-mov--tap" data-push-visit' +
+      ' data-tipo="' + esc(m.tipo) + '" data-titulo="' + esc(m.titulo) + '" data-detalle="' + esc(m.detalle) + '"' +
+      ' aria-label="' + esc(m.titulo + ", " + m.detalle + ", " + m.delta + " visita. Toca para recibir su notificación") + '">' +
       '<span class="tile r1-mov-tile' + (dev ? " tile--muted" : "") + '">' + I(dev ? "undo" : "cart", 20) + "</span>" +
       '<span class="r1-mov-main">' +
       '<span class="r1-mov-title">' + esc(m.titulo) + "</span>" +
@@ -115,13 +118,18 @@
       '<span class="r1-mov-delta">' +
       '<span class="r1-mov-num' + (dev ? "" : " is-plus") + '">' + m.delta + "</span>" +
       '<span class="r1-mov-unit">visita</span>' +
-      "</span></li>"
+      "</span></button></li>"
     );
   }
 
   /* Lista blanca con separadores con sangría de 68 px */
   function movList(list) {
     return '<ul class="r1-list">' + list.map(movRow).join('<li class="r1-sep" aria-hidden="true"></li>') + "</ul>";
+  }
+
+  /* Pista bajo la lista: la notificación de ejemplo */
+  function pushHint() {
+    return '<p class="push-hint">' + I("bell", 16) + "Toca una visita para recibir su notificación de ejemplo</p>";
   }
 
   /* Fila de "Más información" (abre hoja o aviso) */
@@ -221,7 +229,8 @@
     tab: "visitas",
     note:
       "Visitas acumuladas y avance hacia el premio, sin revelar cuál es; la meta la configura negocio. " +
-      "Toca <b>Ver todas</b> para el historial o <b>Cómo funcionan las visitas</b> para la explicación.",
+      "Toca <b>Ver todas</b> para el historial o <b>Cómo funcionan las visitas</b> para la explicación. " +
+      "<b>Toca una visita</b> para ver su notificación: en el celular llega una real (pide permiso la primera vez); en la computadora se simula dentro del teléfono.",
     render: function () {
       return (
         '<header class="r1-head">' +
@@ -240,6 +249,7 @@
         '<div class="sec-head"><h2 class="sec-title">Tus últimas visitas</h2>' +
         '<a class="link r1-link" href="#/r2" data-go="r2">Ver todas</a></div>' +
         movList(D.movimientos) +
+        pushHint() +
         "</section>" +
 
         '<section class="r1-sec">' +
@@ -267,7 +277,7 @@
     top: "canvas",
     note:
       "Historial de visitas del periodo en curso: cada compra de más de S/ 10 suma 1 visita y una devolución la anula. " +
-      "Toca la flecha para volver a Visitas.",
+      "Toca la flecha para volver a Visitas. <b>Toca un movimiento</b> para recibir su notificación de ejemplo.",
     render: function () {
       var v = D.visitas, r = D.historialResumen;
       return (
@@ -289,6 +299,7 @@
         '<section class="r2-sec">' +
         '<h2 class="sec-title">Movimientos</h2>' +
         movList(D.historial) +
+        pushHint() +
         "</section>" +
         '<p class="r2-count">Mostrando ' + D.historial.length + " de " + r.total + " movimientos</p>"
       );

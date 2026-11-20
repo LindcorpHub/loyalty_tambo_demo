@@ -44,6 +44,12 @@ CT.index = [
     { id: "s6", code: "S6", title: "Aún sin visitas" },
     { id: "s7", code: "S7", title: "Nuevo periodo" },
   ]},
+  // No están en el Figma: invitación a instalar la PWA y permiso de notificaciones
+  { group: "App instalable", items: [
+    { id: "p1", code: "P1", title: "Invitación a instalar" },
+    { id: "p2", code: "P2", title: "Instalar en iPhone" },
+    { id: "p3", code: "P3", title: "Activar notificaciones" },
+  ]},
 ];
 
 CT.screens = {};

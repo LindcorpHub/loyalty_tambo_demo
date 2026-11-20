@@ -12,6 +12,10 @@
   "background_color": "#af1380",
   "theme_color": "#af1380",
   "categories": ["shopping", "lifestyle"],
+  "prefer_related_applications": false,
+  "related_applications": [
+    { "platform": "webapp", "url": "https://lindcorphub.github.io/loyalty_tambo_demo/manifest.webmanifest" }
+  ],
   "icons": [
     { "src": "assets/pwa/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "assets/pwa/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },

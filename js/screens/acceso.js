@@ -657,7 +657,16 @@
 
       // Foco en la hoja (no en el botón) para que el lector la anuncie sin anillo visible
       var t = setTimeout(function () { if (sheet.isConnected) sheet.focus({ preventScroll: true }); }, 60);
-      return function () { clearTimeout(t); };
+
+      // Al cerrar la bienvenida, en el navegador del celular: invitación a instalar (una vez)
+      var cancelInvite = null;
+      var mo = new MutationObserver(function () {
+        if (layer.isConnected || cancelInvite || !CT.pwa) return;
+        mo.disconnect();
+        cancelInvite = CT.pwa.maybeInvite(450);
+      });
+      mo.observe(root, { childList: true });
+      return function () { clearTimeout(t); mo.disconnect(); if (cancelInvite) cancelInvite(); };
     },
   });
 

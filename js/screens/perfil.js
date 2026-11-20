@@ -45,7 +45,8 @@
     tab: "perfil",
     note:
       "Datos de la socia en solo lectura (DNI enmascarado), su tarjeta en Wallet, el permiso de marketing (PUT /consents) y la ayuda legal. " +
-      "Prueba el <b>interruptor</b> de promociones, toca <b>Editar mis datos</b>, <b>Cerrar sesión</b> o <b>Eliminar mi cuenta</b>.",
+      "Prueba el <b>interruptor</b> de promociones, toca <b>Editar mis datos</b>, <b>Cerrar sesión</b> o <b>Eliminar mi cuenta</b>. " +
+      "<b>Instalar la app</b> abre la invitación a instalar (no está en el Figma) y desaparece cuando la app ya está instalada.",
     render: function () {
       var s = D.socio;
       var datos = [
@@ -78,8 +79,15 @@
         // Mi tarjeta
         '<section class="e1-sec" aria-labelledby="e1-tarjeta-t">' +
         '<div class="e1-sec-head"><h2 class="sec-title" id="e1-tarjeta-t">Mi tarjeta</h2></div>' +
-        '<div class="card e1-card">' +
+        '<div class="card e1-card e1-list">' +
         navRow({ icon: "wallet", tile: "tile--yellow", title: "Tarjeta en mi Wallet", sub: "Agrégala a Apple Wallet o Google Wallet", go: "b2" }) +
+        // PWA: se oculta sola si la app ya está instalada (js/pwa.js)
+        '<button type="button" class="e1-row" data-pwa-install>' +
+        '<span class="tile tile--brand e1-tile">' + I("phone", 20) + "</span>" +
+        '<span class="e1-row-main"><span class="t-label c-primary">Instalar la app</span>' +
+        '<span class="t-note c-tertiary">Ábrela desde tu pantalla de inicio</span></span>' +
+        '<span class="e1-chev">' + I("chev_r", 20) + "</span>" +
+        "</button>" +
         "</div></section>" +
 
         // Ofertas y Promociones (consentimiento MARKETING)

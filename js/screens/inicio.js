@@ -102,6 +102,8 @@
       var X = CT.inicio;
       return X.header() + X.barcodeCard() + X.unlockCard() + X.beneficios(2) + '<div style="height:24px"></div>';
     },
+    // Primera llegada al Inicio desde el navegador del celular: invitación a instalar (una vez)
+    mount: function () { return CT.pwa ? CT.pwa.maybeInvite(900) : null; },
   });
 })();
 

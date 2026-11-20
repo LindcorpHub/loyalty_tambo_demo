@@ -4,7 +4,7 @@
    la copia guardada: así la demo abre aunque no haya señal en la tienda.
    Sube VERSION cuando quieras forzar que los celulares limpien la copia vieja.
    ========================================================================== */
-var VERSION = "ct-maqueta-v5";
+var VERSION = "ct-maqueta-v6";
 
 var PRECACHE = [
   "./",
@@ -18,14 +18,18 @@ var PRECACHE = [
   "./css/screens/inicio.css",
   "./css/screens/visitas-cupones.css",
   "./css/screens/perfil.css",
+  "./css/pwa.css",
   "./js/icons.js",
   "./js/data.js",
   "./js/ui.js",
+  "./js/pwa.js",
   "./js/app.js",
   "./js/screens/acceso.js",
   "./js/screens/inicio.js",
   "./js/screens/visitas-cupones.js",
   "./js/screens/perfil.js",
+  "./js/screens/app-instalable.js",
+  "./assets/pwa/badge-96.png",
   "./assets/brand/logo-negativo.svg",
   "./assets/brand/logo-positivo.svg",
   "./assets/brand/favicon.svg",
@@ -89,5 +93,46 @@ self.addEventListener("fetch", function (event) {
           return Response.error();
         });
       })
+  );
+});
+
+/* --------------------------------------------------------------------------
+   Notificaciones.
+   - "push": así se recibiría un push real del backend (Web Push con VAPID).
+     El backend enviaría un JSON { title, body, url }; la maqueta no tiene
+     backend, pero el manejador queda listo.
+   - "notificationclick": abre la app (o la trae al frente) en la pantalla
+     indicada; también para las notificaciones de ejemplo de las visitas.
+   -------------------------------------------------------------------------- */
+self.addEventListener("push", function (event) {
+  var d = {};
+  try { d = event.data ? event.data.json() : {}; } catch (e) { d = { body: event.data ? event.data.text() : "" }; }
+  event.waitUntil(
+    self.registration.showNotification(d.title || "Club Tambero", {
+      body: d.body || "",
+      icon: "assets/pwa/icon-192.png",
+      badge: "assets/pwa/badge-96.png",
+      tag: d.tag || "ct-push",
+      lang: "es-PE",
+      data: { url: d.url || "./#/b1" },
+    })
+  );
+});
+
+self.addEventListener("notificationclick", function (event) {
+  var url = (event.notification.data && event.notification.data.url) || "./#/b1";
+  var target = new URL(url, self.registration.scope);
+  event.notification.close();
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
+      for (var i = 0; i < list.length; i++) {
+        var c = list[i];
+        if (c.url.indexOf(self.registration.scope) === 0) {
+          c.postMessage({ type: "ct-open", hash: target.hash });
+          return c.focus ? c.focus() : null;
+        }
+      }
+      return self.clients.openWindow ? self.clients.openWindow(target.href) : null;
+    })
   );
 });

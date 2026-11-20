@@ -2,7 +2,7 @@
 
 Maqueta navegable del programa de lealtad **Club Tambero**, construida a partir del Figma *Club Tambero - Fase 0* (página **MVP V0**): versión móvil, tema claro, datos ficticios y sin llamadas a servicios.
 
-- 24 pantallas: Acceso (A1–A5), Inicio y tarjeta (B1–B2), Visitas (R1–R3), Cupones (C1–C3), Perfil (E1–E3) y Estados (S1–S7).
+- 27 pantallas: Acceso (A1–A5), Inicio y tarjeta (B1–B2), Visitas (R1–R3), Cupones (C1–C3), Perfil (E1–E3), Estados (S1–S7) y App instalable (P1–P3, agregadas para la demo; no están en el Figma).
 - En computadora se muestra dentro de un teléfono, con el índice de pantallas a la izquierda y una nota de cada pantalla a la derecha (flechas ← → para recorrerlas).
 - En un celular se abre a pantalla completa, como la web real. Para saltar entre pantallas, toca la pestaña del borde izquierdo.
 - La socia de ejemplo es **Carla Mendoza**. La contraseña ya viene escrita (`Tambo123`): basta tocar **Iniciar sesión**; con el correo vacío se entra como Carla. Cualquier otra contraseña muestra el aviso de credenciales incorrectas. **Continuar con Apple / Google** también entra como Carla, directo al Inicio; el registro con esas cuentas (A3) se ve desde **Crear cuenta**.
@@ -47,6 +47,19 @@ Antes de una demo sin señal, ábrela una vez con internet y recorre las pantall
 
 > La instalación solo funciona desde el enlace publicado (https) o desde `http://localhost`. Abriendo `index.html` con doble clic la maqueta se ve, pero no se puede instalar.
 
+**Invitación a instalar.** En el navegador del celular, la primera vez que la socia llega al Inicio (o al cerrar la Bienvenida A5) aparece una hoja que invita a instalar la app. Sale una sola vez y nunca si la app ya está instalada; después queda disponible en **Perfil → Instalar la app**.
+
+- En Android con Chrome, **Instalar app** abre el instalador del sistema con un toque. Chrome habilita esa opción tras unos segundos de uso, así que la hoja espera ese momento (hasta 20 s); si el navegador no la ofrece, muestra los pasos.
+- En iPhone ninguna web se puede instalar desde un botón, así que la hoja muestra los pasos de Safari.
+
+**Notificación de ejemplo.** En Visitas (R1) o Mis visitas (R2), toca una visita: llega una notificación como la que enviaría el programa.
+
+- La primera vez, una hoja explica para qué sirven los avisos antes de que el celular pida permiso. Si el permiso está bloqueado, explica cómo activarlo.
+- En Android llega desde el navegador o desde la app instalada. En iPhone solo llega con la app instalada y abierta desde su ícono (es una regla de Apple); si no, la hoja ofrece los pasos para instalarla.
+- Si la notificación no aparece arriba en iPhone, desliza hacia abajo desde el borde superior para verla en el Centro de notificaciones.
+- No hay backend: la notificación la crea el propio celular con el service worker, pero se ve igual que una enviada desde el servidor. `sw.js` ya trae el manejador `push` para cuando exista uno.
+- En la computadora (vista de presentador), la notificación se simula dentro del teléfono.
+
 ## Estructura
 
 ```
@@ -61,6 +74,8 @@ js/data.js              Datos ficticios de la socia y sus cupones
 js/ui.js                Helpers que generan el HTML de los componentes
 js/app.js               Router por hash (#/a1, #/b1…), transiciones, capas y avisos
 js/screens/*.js         Pantallas por sección
+js/pwa.js, css/pwa.css  Invitación a instalar y notificaciones de ejemplo
+sw.js                   Service worker: copia sin conexión y notificaciones
 assets/                 Logo Tambo, código de barras e imágenes exportadas de Figma
 ```
 
